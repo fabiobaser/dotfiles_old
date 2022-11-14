@@ -1,0 +1,88 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# ~/.config/starship.toml
+
+[character]
+error_symbol = "[✖](bold red) "
+
+[cmd_duration]
+min_time = 2_000  # Show command duration over 10,000 milliseconds (=10 sec)
+format = " took [$duration]($style)"
+
+[directory]
+truncation_length = 3
+format = "[$path]($style)[$lock_symbol]($lock_style) "
+
+[git_branch]
+format = " [$symbol$branch]($style) "
+style = "bold yellow"
+
+[git_commit]
+commit_hash_length = 8
+style = "bold white"
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+
+[git_status]
+conflicted = "⚔️ "
+ahead = " ×${count} "
+behind = " ×${count}"
+diverged = " [ ×${ahead_count}  ×${behind_count}] "
+untracked = " ×${count} "
+stashed = " ×${count}"
+modified = " ×${count} "
+staged = " ×${count} "
+renamed = "📛×${count} "
+deleted = " ×${count} "
+style = "bright-white"
+format = "$all_status$ahead_behind"
+
+[hostname]
+ssh_only = false
+format = "<[$hostname]($style)>"
+trim_at = "-"
+style = "bold dimmed white"
+disabled = true
+
+[julia]
+format = "[$symbol$version]($style) "
+symbol = "ஃ "
+style = "bold green"
+
+[memory_usage]
+format = "$symbol[${ram}( | ${swap})]($style) "
+threshold = 70
+style = "bold dimmed white"
+disabled = false
+symbol = " "
+
+[dotnet]
+disabled = true
+
+[package]
+disabled = false
+style = "208"
+
+[python]
+format = "[$symbol$version]($style) "
+style = "bold green"
+
+[rust]
+format = "[$symbol$version]($style) "
+style = "bold green"
+
+[time]
+time_format = "%T"
+format = "🕙 $time($style) "
+style = "bright-white"
+disabled = true
+
+[username]
+style_user = "bold dimmed blue"
+show_always = false
+
+[nodejs]
+disabled = true
+format = "via [🤖 $version](bold green) "
+
