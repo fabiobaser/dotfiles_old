@@ -1,0 +1,1 @@
+{"title":"Keychron K8 Microphone Button to Shift + Alt + Cmd","rules":[{"description":"Keychron K8 Microphone Button to Shift + Alt + Cmd","manipulators":[{"type":"basic","from":{"modifiers":{"mandatory":["fn"]},"key_code":"spacebar"},"to":[{"key_code":"m","modifiers":["left_shift","left_alt"]}]}]}]}
