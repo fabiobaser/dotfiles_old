@@ -1,0 +1,60 @@
+
+import:
+  # uncomment the flavour you want below:
+  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+#  - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
+#  - ~/.config/alacritty/catppuccin/catppuccin-frappe.yml
+#  - ~/.config/alacritty/catppuccin/catppuccin-latte.yml
+
+shell:
+  program: /opt/homebrew/bin/fish
+  args:
+    - -l
+    - -c
+    - "tmux new -As0 main"
+
+# Configuration for Alacritty, the GPU enhanced terminal emulator.
+window:
+  padding:
+    x: 10
+    y: 10
+
+  opacity: 1.0
+  decorations: None
+
+  dynamic_padding: true
+
+  title: Fabios Terminal
+  dynamic_title: true
+
+  hide_cursor_when_typing: true
+
+font:
+  size: 22
+  normal:
+    family: FiraCode NF
+    style: Regular
+
+  bold:
+    family: FiraCode NF
+    style: Bold
+
+  italic:
+    family: FiraCode NF
+    style: Italic
+
+colors:
+  cursor:
+    text: "0xf1c1c1"
+    cursor: "0xD55FDE"
+
+scrolling:
+  history: 5000
+  auto_scroll: true
+
+raw_bold_text_with_bright_colors: true
+alt_send_esc: false
+
+key_bindings:
+  - { key: Plus, mods: Command, action: "IncreaseFontSize" }
+  - { key: Minus, mods: Command, action: "DecreaseFontSize" }
