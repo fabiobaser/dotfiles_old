@@ -11,7 +11,7 @@ shell:
   args:
     - -l
     - -c
-    - "tmux new -As0 main"
+    - "tmux new -As0"
 
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 window:
@@ -20,7 +20,6 @@ window:
     y: 10
 
   opacity: 1.0
-  decorations: None
 
   dynamic_padding: true
 
@@ -58,3 +57,7 @@ alt_send_esc: false
 key_bindings:
   - { key: Plus, mods: Command, action: "IncreaseFontSize" }
   - { key: Minus, mods: Command, action: "DecreaseFontSize" }
+  - { key: T, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["new-window"]}}
+  - { key: W, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["kill-pane"]}}
+  - { key: D, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["split-window", "-v"]}}
+  - { key: D, mods: Command|Shift, command: { program : "/opt/homebrew/bin/tmux", args: ["split-window", "-h"]}}
