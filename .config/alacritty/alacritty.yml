@@ -1,8 +1,8 @@
 
 import:
   # uncomment the flavour you want below:
-  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
-#  - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
+#  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+  - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
 #  - ~/.config/alacritty/catppuccin/catppuccin-frappe.yml
 #  - ~/.config/alacritty/catppuccin/catppuccin-latte.yml
 
@@ -13,11 +13,15 @@ shell:
     - -c
     - "tmux new -As0"
 
+launcher:
+  program: xdg-open
+  args: []
+
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 window:
   padding:
-    x: 10
-    y: 10
+    x: 0
+    y: 0
 
   opacity: 1.0
 
@@ -50,22 +54,30 @@ colors:
 scrolling:
   history: 5000
   auto_scroll: true
+  multiplier: 3
+  faux_multiplier: 3
 
 raw_bold_text_with_bright_colors: true
 alt_send_esc: false
 
-key_bindings:
-  - { key: Plus, mods: Command, action: "IncreaseFontSize" }
-  - { key: Minus, mods: Command, action: "DecreaseFontSize" }
-  - { key: T, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["new-window"]}}
-  - { key: W, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["kill-pane"]}}
-  - { key: D, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["split-window", "-v"]}}
-  - { key: D, mods: Command|Shift, command: { program : "/opt/homebrew/bin/tmux", args: ["split-window", "-h"]}}
+hints:
+  launcher: open
 
-  - { key: Left, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["select-pane", "-L"]}}
-  - { key: Up, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["select-pane", "-U"]}}
-  - { key: Down, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["select-pane", "-D"]}}
-  - { key: Right, mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["select-pane", "-R"]}}
+selection:
+  save_to_clipboard: false
+
+key_bindings:
+  - { key: Plus,      mods: Command, action: "IncreaseFontSize" }
+  - { key: Minus,     mods: Command, action: "DecreaseFontSize" }
+  - { key: T,         mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["new-window"]}}
+  - { key: W,         mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["kill-pane"]}}
+  - { key: D,         mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["split-window", "-v", "-c", "#{pane_current_path}"]}}
+  - { key: D,         mods: Command|Shift, command: { program : "/opt/homebrew/bin/tmux", args: ["split-window", "-h", "-c", "#{pane_current_path}"]}}
+
+  - { key: Left,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-L"]}}
+  - { key: Up,        mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-U"]}}
+  - { key: Down,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-D"]}}
+  - { key: Right,     mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-R"]}}
 
   - { key: Key1,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 1"] } }
   - { key: Key2,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 2"] } }
