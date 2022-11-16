@@ -19,13 +19,15 @@ launcher:
 
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 window:
+  decorations: None
+
   padding:
     x: 0
     y: 0
 
   opacity: 1.0
 
-  dynamic_padding: true
+  dynamic_padding: false
 
   title: Fabios Terminal
   dynamic_title: true
