@@ -141,3 +141,8 @@ eval "$(sheldon source)"
 eval "$(starship init zsh)"
 # Profiling End-Block
 # zprof
+
+# pnpm
+export PNPM_HOME="/Users/fabiobaser/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
