@@ -1,19 +1,30 @@
-# hyper is bound to (shift + cmd + alt + ctrl) via Karabiner Elements
+# meh is bound to (shift + cmd + alt + ctrl) via Karabiner Elements
 
-hyper - 1 : yabai -m space --focus 1
-hyper - 2 : yabai -m space --focus 2
-hyper - 3 : yabai -m space --focus 3
-hyper - 4 : yabai -m space --focus 4
-hyper - 5 : yabai -m space --focus 5
-hyper - 6 : yabai -m space --focus 6
-hyper - 7 : yabai -m space --focus 7
-hyper - 8 : yabai -m space --focus 8
-hyper - 9 : yabai -m space --focus 9
+meh - 1 : yabai -m space --focus 1
+meh - 2 : yabai -m space --focus 2
+meh - 3 : yabai -m space --focus 3
+meh - 4 : yabai -m space --focus 4
+meh - 5 : yabai -m space --focus 5
+meh - 6 : yabai -m space --focus 6
+meh - 7 : yabai -m space --focus 7
+meh - 8 : yabai -m space --focus 8
+meh - 9 : yabai -m space --focus 9
 
+# send window to desktop and follow focus
+#meh - x : yabai -m window --space recent; yabai -m space --focus recent
+#meh - z : yabai -m window --space prev; yabai -m space --focus prev
+#meh - c : yabai -m window --space next; yabai -m space --focus next
+meh - 1 : yabai -m window --space  1; yabai -m space --focus 1
+meh - 2 : yabai -m window --space  2; yabai -m space --focus 2
+meh - 3 : yabai -m window --space  3; yabai -m space --focus 3
+meh - 4 : yabai -m window --space  4; yabai -m space --focus 4
+meh - 5 : yabai -m window --space  5; yabai -m space --focus 5
+meh - 6 : yabai -m window --space  6; yabai -m space --focus 6
+meh - 7 : yabai -m window --space  7; yabai -m space --focus 7
+meh - 8 : yabai -m window --space  8; yabai -m space --focus 8
+meh - 9 : yabai -m window --space  9; yabai -m space --focus 9
+meh - 0 : yabai -m window --space 10; yabai -m space --focus 10
 
-hyper - e : yabai -m space --focus next || yabai -m space --focus first
-hyper - q : yabai -m space --focus prev || yabai -m space --focus last
-
-hyper - b: yabai -m space --balance
-hyper - r: yabai -m space --mirror y-axis
-hyper - t: yabai -m window --toggle float
+meh - b: yabai -m space --balance
+meh - r: yabai -m space --mirror y-axis
+meh - t: yabai -m window --toggle float
