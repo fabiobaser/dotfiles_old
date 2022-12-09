@@ -2,6 +2,8 @@ local function map(m, k, v, d)
     vim.keymap.set(m, k, v, { silent = true, desc = d })
 end
 
+local gotoPreview = require("goto-preview")
+
 -- Essentials
 map("n", "<leader>q", "<CMD>q<CR>", "Quit")
 map("n", "<leader>h", "<CMD>nohlsearch<CR>", "No Highlight")
@@ -13,11 +15,18 @@ map("n", "<S-Up>", "<CMD>move -2<CR>", "Move Line Up")
 map("n", "<S-Down>", "<CMD>move +1<CR>", "Move Line Down")
 map("i", "<S-Up>", "<ESC><CMD>move -2<CR>", "Move Line Up")
 map("i", "<S-Down>", "<ESC><CMD>move +1<CR>", "Move Line Down")
+map("n", "s", "<Nop>")
 
 -- Packer
 map("n", "<leader>pi", "<CMD>PackerInstall<CR>", "Packer Install")
+map("n", "<leader>pI", "<CMD>Mason<CR>", "Mason Installer")
+map("n", "<leader>pU", "<CMD>MasonUpdateAll<CR>", "Mason Update")
 map("n", "<leader>ps", "<CMD>PackerSync<CR>", "Packer Sync")
 map("n", "<leader>pS", "<CMD>PackerStatus<CR>", "Packer Status")
+
+-- Bufdelete
+map("n", "<leader>c", "<CMD>lua require('bufdelete').bufdelete(0, false)<CR>", "Close Buffer")
+map("n", "<leader>C", "<CMD>lua require('bufdelete').bufdelete(0, true)<CR>", "Force close Buffer")
 
 -- NeoTree
 map("n", "<leader>e", "<CMD>Neotree toggle<CR>", "Toggle Explorer")
@@ -58,3 +67,34 @@ map("n", "<leader>tv", "<CMD>ToggleTerm direction=vertical<cr>", "Terminal float
 map("n", "<leader>tg", "<CMD>lua Toggle_lazygit()<cr>", "Open Lazygit")
 
 map("n", "<F7>", "<CMD>ToggleTerm<cr>", "Close Terminal")
+
+-- goto-preview
+map("n", "gpd", gotoPreview.goto_preview_definition, "Preview Definition")
+map("n", "gpt", gotoPreview.goto_preview_type_definition, "Preview Type")
+map("n", "gpi", gotoPreview.goto_preview_implementation, "Implementation")
+map("n", "gP", gotoPreview.close_all_win, "Close all Previews")
+map("n", "gpr", gotoPreview.goto_preview_references, "Preview References")
+
+-- LSP
+map("n", "gh", "<CMD>Lspsaga lsp_finder<CR>", "Find Definition")
+map("n", "<leader>ca", "<CMD>Lspsaga code_action<CR>", "Code Action")
+map("v", "<leader>ca", "<CMD>Lspsaga code_action<CR>", "Code Action")
+map("n", "gr", "<CMD>Lspsaga rename<CR>", "Rename")
+map("n", "<leader>cd", "<CMD>Lspsaga show_cursor_diagnostics<CR>", "Show Cursor Diagnostics")
+map("n", "[e", "<CMD>Lspsaga diagnostics_jump_prev<CR>", "Jump to next Issue")
+map("n", "]e", "<CMD>Lspsaga diagnostics_jump_next<CR>", "Jump to previous Issue")
+map(
+    "n",
+    "[e",
+    "<CMD>lua require('lspsaga.diagnostics').goto_next({ severity = vim.diagnostics.severity.ERROR })<CR>",
+    "Jump to next Error"
+)
+map(
+    "n",
+    "]e",
+    "<CMD>lua require('lspsaga.diagnostics').goto_prev({ severity = vim.diagnostics.severity.ERROR })<CR>",
+    "Jump to previous Error"
+)
+map("n", "K", "<CMD>Lspsaga hover_doc<CR>", "Hover Diagnostics")
+map("n", "<leader>gg", "<CMD>Lspsaga floatterm lazygit<CR>", "Open Lazygit")
+map("t", "<F23>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], "Close Floatterm")

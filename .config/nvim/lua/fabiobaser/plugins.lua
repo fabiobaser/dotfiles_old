@@ -9,26 +9,78 @@ return require("packer").startup({
         -- Package Manager
         use({ "wbthomason/packer.nvim" })
         -- Themes
-        use({ "catppuccin/nvim", as = "catppuccin" })
+        use({
+            "catppuccin/nvim",
+            as = "catppuccin",
+            config = function()
+                require("catppuccin").setup({ integrations = { fidget = true, lsp_saga = true } })
+            end,
+        })
         use({ "navarasu/onedark.nvim" })
-        -- General UI
+        -- LSP
+        use({
+            "williamboman/mason.nvim",
+            config = function()
+                require("mason").setup()
+            end,
+        })
+
+        use({
+            "williamboman/mason-lspconfig.nvim",
+            config = function()
+                require("mason-lspconfig").setup()
+
+                require("mason-lspconfig").setup_handlers({
+                    -- The first entry (without a key) will be the default handler
+                    -- and will be called for each installed server that doesn't have
+                    -- a dedicated handler.
+                    function(server_name) -- default handler (optional)
+                        require("lspconfig")[server_name].setup({})
+                    end,
+                    -- Next, you can provide a dedicated handler for specific servers.
+                    -- For example, a handler override for the `rust_analyzer`:
+                    ["rust_analyzer"] = function()
+                        require("rust-tools").setup({})
+                    end,
+                })
+            end,
+        })
+        use({ "neovim/nvim-lspconfig" })
+        use({
+            "glepnir/lspsaga.nvim",
+            branch = "main",
+            config = function()
+                local saga = require("lspsaga")
+
+                saga.init_lsp_saga({
+                    custom_kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
+                })
+            end,
+        })
+        -- Syntax and Code
+        use({
+            "m-demare/hlargs.nvim",
+            config = function()
+                require("hlargs").setup()
+            end,
+        })
+        -- GeneralUI
+        use({ "nvim-tree/nvim-web-devicons" })
         -- Window / Buffer Management
-        use({"famiu/bufdelete.nvim"})
+        use({ "famiu/bufdelete.nvim" })
         use({ "rcarriga/nvim-notify" })
         use({ "j-morano/buffer_manager.nvim" })
         use({ "onsails/lspkind.nvim" })
-        use({ "onsails/diaglist.nvim",
+        use({
+            "onsails/diaglist.nvim",
             config = function()
                 require("diaglist").init({ debug = false })
             end,
         })
         use({
             "kylechui/nvim-surround",
-            tag = "*", -- Use for stability; omit to use `main` branch for the latest features
             config = function()
-                require("nvim-surround").setup({
-                    -- Configuration here, or leave empty to use defaults
-                })
+                require("nvim-surround").setup({})
             end,
         })
 
@@ -36,7 +88,7 @@ return require("packer").startup({
             "Shatur/neovim-session-manager",
             config = function()
                 require("session_manager").setup({
-                    autoload_mode = require("session_manager.config").AutoloadMode.CurrentDir,
+                    autoload_mode = require("session_manager.config").AutoloadMode.Disabled,
                 })
             end,
         })
@@ -58,7 +110,7 @@ return require("packer").startup({
         use({
             "numToStr/Comment.nvim",
             config = function()
-                require("Comment").setup()
+                require("Comment").setup({})
             end,
         })
 
@@ -66,6 +118,13 @@ return require("packer").startup({
             "akinsho/toggleterm.nvim",
             config = function()
                 require("fabiobaser.configs.toggleterm")
+            end,
+        })
+
+        use({
+            "rmagatti/goto-preview",
+            config = function()
+                require("goto-preview").setup({})
             end,
         })
 
@@ -89,25 +148,38 @@ return require("packer").startup({
         use({ "nvim-telescope/telescope-ui-select.nvim" })
 
         use({
-            "nvim-lualine/lualine.nvim",
-            event = "BufEnter",
+            "feline-nvim/feline.nvim",
+            after = "catppuccin",
             config = function()
-                require("lualine").setup()
+                local ctp_feline = require("catppuccin.groups.integrations.feline")
+
+                require("feline").setup({
+                    components = ctp_feline.get(),
+                })
             end,
         })
-
         use({
             "j-hui/fidget.nvim",
-            after = "lualine.nvim",
             config = function()
-                require("fidget").setup()
+                require("fidget").setup({
+                    window = {
+                        blend = 0,
+                    },
+                })
             end,
         })
 
         use({
             "L3MON4D3/LuaSnip",
             tag = "v<CurrentMajor>.*",
+            config = function()
+                local lazyLoad = require("luasnip.loaders.from_vscode").lazy_load
+                lazyLoad()
+                lazyLoad({ paths = { "./snippets" } })
+            end,
         })
+
+        use("rafamadriz/friendly-snippets")
 
         use({
             "lukas-reineke/indent-blankline.nvim",
@@ -121,9 +193,15 @@ return require("packer").startup({
             branch = "v2.x",
             requires = {
                 "nvim-lua/plenary.nvim",
-                "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
                 "MunifTanjim/nui.nvim",
             },
+            config = function()
+                require("neo-tree").setup({
+                    close_if_last_window = true,
+                    enable_git_status = true,
+                    enable_diagnostics = true,
+                })
+            end,
         })
 
         use({
@@ -131,7 +209,15 @@ return require("packer").startup({
             tag = "v3.*",
             requires = "nvim-tree/nvim-web-devicons",
             config = function()
-                require("bufferline").setup({})
+                require("bufferline").setup({
+                    options = {
+                        diagnostics = "nvim_lsp",
+                        diagnostics_indicator = function(count, level)
+                            local icon = level:match("error") and " " or " "
+                            return " " .. icon .. count
+                        end,
+                    },
+                })
             end,
         })
 
@@ -238,29 +324,37 @@ return require("packer").startup({
         })
 
         use({
-            "neovim/nvim-lspconfig",
-            opt = true,
-            event = "BufReadPre",
-            wants = { "nvim-lsp-installer" },
-            config = function()
-                require("config.lsp").setup()
-            end,
-            requires = {
-                "williamboman/nvim-lsp-installer",
-            },
-        })
-
-        use({
             "hrsh7th/nvim-cmp",
             event = "InsertEnter",
             config = function()
                 require("fabiobaser.configs.cmp")
             end,
         })
+        use({ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" })
 
         use({
             "hrsh7th/cmp-nvim-lsp",
             after = "nvim-cmp",
+        })
+
+        use({
+            "hrsh7th/cmp-path",
+            after = "nvim-cmp",
+        })
+
+        use({
+            "David-Kunz/cmp-npm",
+            after = "nvim-cmp",
+            config = function()
+                require("cmp-npm").setup()
+            end,
+        })
+
+        use({
+            "SmiteshP/nvim-gps",
+            config = function()
+                require("nvim-gps").setup()
+            end,
         })
     end,
     config = {
