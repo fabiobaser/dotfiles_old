@@ -37,6 +37,6 @@ g.mapleader = " "
 g.maplocalleader = " "
 
 -- Folding
-o.foldmethod = "expr"
+o.foldmethod = "marker"
 o.foldexpr = "nvim_treesitter#foldexpr()"
 o.foldlevelstart = 6

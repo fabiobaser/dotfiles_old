@@ -1,5 +1,5 @@
 local function map(m, k, v, d)
-    vim.keymap.set(m, k, v, { silent = true, desc = d })
+	vim.keymap.set(m, k, v, { silent = true, desc = d })
 end
 
 local gotoPreview = require("goto-preview")
@@ -61,12 +61,22 @@ map("n", "<S-l>", "<CMD>BufferLineCycleNext<CR>", "Next Buffer Tab")
 map("n", "<S-h>", "<CMD>BufferLineCyclePrev<CR>", "Previous Buffer Tab")
 
 -- Terminal
-map("n", "<leader>tf", "<CMD>ToggleTerm direction=float<cr>", "Terminal floating")
-map("n", "<leader>th", "<CMD>ToggleTerm direction=horizontal<cr>", "Terminal floating")
-map("n", "<leader>tv", "<CMD>ToggleTerm direction=vertical<cr>", "Terminal floating")
-map("n", "<leader>tg", "<CMD>lua Toggle_lazygit()<cr>", "Open Lazygit")
 
-map("n", "<F7>", "<CMD>ToggleTerm<cr>", "Close Terminal")
+map("n", "<leader>tf", "<CMD>FloatermNew --height=0.9 --width=0.9 --disposable <CR>", "New floating Terminal")
+map("n", "<leader>tv", "<CMD>FloatermNew --wintype=vsplit --disposable <CR>", "New vertical Terminal")
+map("n", "<leader>th", "<CMD>FloatermNew --wintype=split --disposable <CR>", "New horizontal Terminal")
+map(
+	"n",
+	"<leader>tm",
+	"<CMD>FloatermNew --height=0.9 --width=0.9 --disposable --title=MidnightCommander mc<CR>",
+	"New floating MidnightCommander"
+)
+map(
+	"n",
+	"<leader>tg",
+	"<CMD>FloatermNew --height=0.9 --width=0.9 --disposable --title=LazyGit lazygit<CR>",
+	"New floating LazyGit"
+)
 
 -- goto-preview
 map("n", "gpd", gotoPreview.goto_preview_definition, "Preview Definition")
@@ -76,25 +86,24 @@ map("n", "gP", gotoPreview.close_all_win, "Close all Previews")
 map("n", "gpr", gotoPreview.goto_preview_references, "Preview References")
 
 -- LSP
-map("n", "gh", "<CMD>Lspsaga lsp_finder<CR>", "Find Definition")
-map("n", "<leader>ca", "<CMD>Lspsaga code_action<CR>", "Code Action")
-map("v", "<leader>ca", "<CMD>Lspsaga code_action<CR>", "Code Action")
-map("n", "gr", "<CMD>Lspsaga rename<CR>", "Rename")
-map("n", "<leader>cd", "<CMD>Lspsaga show_cursor_diagnostics<CR>", "Show Cursor Diagnostics")
+map("n", "<leader>lf", "<CMD>Lspsaga lsp_finder<CR>", "Find Definition")
+map("n", "<leader>la", "<CMD>Lspsaga code_action<CR>", "Code Action")
+map("v", "<leader>la", "<CMD>Lspsaga code_action<CR>", "Code Action")
+map("n", "<leader>lr", "<CMD>Lspsaga rename<CR>", "Rename")
+map("n", "<leader>ld", "<CMD>Lspsaga show_cursor_diagnostics<CR>", "Show Cursor Diagnostics")
 map("n", "[e", "<CMD>Lspsaga diagnostics_jump_prev<CR>", "Jump to next Issue")
 map("n", "]e", "<CMD>Lspsaga diagnostics_jump_next<CR>", "Jump to previous Issue")
 map(
-    "n",
-    "[e",
-    "<CMD>lua require('lspsaga.diagnostics').goto_next({ severity = vim.diagnostics.severity.ERROR })<CR>",
-    "Jump to next Error"
+	"n",
+	"[e",
+	"<CMD>lua require('lspsaga.diagnostics').goto_next({ severity = vim.diagnostics.severity.ERROR })<CR>",
+	"Jump to next Error"
 )
 map(
-    "n",
-    "]e",
-    "<CMD>lua require('lspsaga.diagnostics').goto_prev({ severity = vim.diagnostics.severity.ERROR })<CR>",
-    "Jump to previous Error"
+	"n",
+	"]e",
+	"<CMD>lua require('lspsaga.diagnostics').goto_prev({ severity = vim.diagnostics.severity.ERROR })<CR>",
+	"Jump to previous Error"
 )
 map("n", "K", "<CMD>Lspsaga hover_doc<CR>", "Hover Diagnostics")
-map("n", "<leader>gg", "<CMD>Lspsaga floatterm lazygit<CR>", "Open Lazygit")
-map("t", "<F23>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], "Close Floatterm")
+map("t", "<F16>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], "Close Floatterm")

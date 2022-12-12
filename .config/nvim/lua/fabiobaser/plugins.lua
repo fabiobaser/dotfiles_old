@@ -8,7 +8,8 @@ return require("packer").startup({
     function(use)
         -- Package Manager
         use({ "wbthomason/packer.nvim" })
-        -- Themes
+
+        -- {{{ THEMES
         use({
             "catppuccin/nvim",
             as = "catppuccin",
@@ -17,7 +18,9 @@ return require("packer").startup({
             end,
         })
         use({ "navarasu/onedark.nvim" })
-        -- LSP
+        -- }}}
+
+        -- {{{ LSP
         use({
             "williamboman/mason.nvim",
             config = function()
@@ -46,6 +49,7 @@ return require("packer").startup({
             end,
         })
         use({ "neovim/nvim-lspconfig" })
+        use({ "onsails/lspkind.nvim" })
         use({
             "glepnir/lspsaga.nvim",
             branch = "main",
@@ -57,6 +61,8 @@ return require("packer").startup({
                 })
             end,
         })
+        -- }}}
+
         -- Syntax and Code
         use({
             "m-demare/hlargs.nvim",
@@ -66,11 +72,17 @@ return require("packer").startup({
         })
         -- GeneralUI
         use({ "nvim-tree/nvim-web-devicons" })
+        use({
+            "lewis6991/gitsigns.nvim",
+            config = function()
+                require("gitsigns").setup()
+            end,
+        })
+
         -- Window / Buffer Management
         use({ "famiu/bufdelete.nvim" })
         use({ "rcarriga/nvim-notify" })
         use({ "j-morano/buffer_manager.nvim" })
-        use({ "onsails/lspkind.nvim" })
         use({
             "onsails/diaglist.nvim",
             config = function()
@@ -96,7 +108,7 @@ return require("packer").startup({
         use({
             "goolord/alpha-nvim",
             config = function()
-                require("alpha").setup(require("alpha.themes.dashboard").config)
+                require("alpha").setup(require("alpha.themes.startify").config)
             end,
         })
 
@@ -114,12 +126,7 @@ return require("packer").startup({
             end,
         })
 
-        use({
-            "akinsho/toggleterm.nvim",
-            config = function()
-                require("fabiobaser.configs.toggleterm")
-            end,
-        })
+        use("voldikss/vim-floaterm")
 
         use({
             "rmagatti/goto-preview",
