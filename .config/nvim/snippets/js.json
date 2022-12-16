@@ -1,0 +1,8 @@
+{
+    "snip1": {
+        "prefix": "log1",
+        "body": [
+            "console.log($1)"
+        ]
+    }
+}

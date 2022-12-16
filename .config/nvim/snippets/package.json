@@ -1,0 +1,11 @@
+{
+    "name": "fabios-snippets",
+    "contributes": {
+        "snippets": [
+            {
+                "language": [ "javascript" , "typescript"],
+                "path": "./js.json"
+            }
+        ]
+    }
+}

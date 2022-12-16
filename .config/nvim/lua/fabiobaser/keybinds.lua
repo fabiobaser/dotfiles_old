@@ -1,5 +1,5 @@
 local function map(m, k, v, d)
-	vim.keymap.set(m, k, v, { silent = true, desc = d })
+    vim.keymap.set(m, k, v, { silent = true, desc = d })
 end
 
 local gotoPreview = require("goto-preview")
@@ -8,6 +8,9 @@ local gotoPreview = require("goto-preview")
 map("n", "<leader>q", "<CMD>q<CR>", "Quit")
 map("n", "<leader>h", "<CMD>nohlsearch<CR>", "No Highlight")
 map("n", "<leader>fn", "<CMD>enew<CR>", "New File")
+map("n", "P", "<CMD>put<CR>", "Paste in new Line")
+map("n", "<leader>i", require("nvim-toggler").toggle, "Toggle Value")
+map("v", "<leader>i", require("nvim-toggler").toggle, "Toggle Value")
 map("n", "<C-s>", "<CMD>write<CR>", "Force Save File")
 map("i", "<C-s>", "<esc><CMD>write<CR>", "Force Save File")
 map("n", "<C-f>", "<CMD>lua vim.lsp.buf.format()<CR>", "Format Buffer")
@@ -16,6 +19,10 @@ map("n", "<S-Down>", "<CMD>move +1<CR>", "Move Line Down")
 map("i", "<S-Up>", "<ESC><CMD>move -2<CR>", "Move Line Up")
 map("i", "<S-Down>", "<ESC><CMD>move +1<CR>", "Move Line Down")
 map("n", "s", "<Nop>")
+
+-- UI
+map("n", "<leader>ut", "<CMD>Twilight<CR>", "Toggle Twilight")
+map("n", "<leader>uc", "<CMD>ColorizerToggle<CR>", "Toggle Color-Previews")
 
 -- Packer
 map("n", "<leader>pi", "<CMD>PackerInstall<CR>", "Packer Install")
@@ -44,6 +51,8 @@ map("n", "<leader>ff", "<CMD>Telescope find_files<CR>", "Search for File")
 map("n", "<leader>fg", "<CMD>Telescope live_grep<CR>", "Search for Word")
 map("n", "<leader>fb", "<CMD>Telescope buffers<CR>", "Search Buffers")
 map("n", "<leader>fh", "<CMD>Telescope help_tags<CR>", "Search Help Tags")
+map("n", "<leader>fR", "<CMD>Telescope frecency<CR>", "Search recent files")
+map("n", "<leader>fr", "<CMD>Telescope frecency workspace=CWD<CR>", "Search recent files in CWD")
 
 -- Buffer Menu
 map("n", "<leader>fe", "<esc><cmd>lua require('buffer_manager.ui').toggle_quick_menu()<cr>", "Show Buffer Quick Menu")
@@ -60,22 +69,30 @@ map("n", "<leader>S.", "<CMD>SessionManager! load_current_dir_session<CR>", "Loa
 map("n", "<S-l>", "<CMD>BufferLineCycleNext<CR>", "Next Buffer Tab")
 map("n", "<S-h>", "<CMD>BufferLineCyclePrev<CR>", "Previous Buffer Tab")
 
+map("n", "<leader>r", require("rest-nvim").run, "Run Request")
+map("n", "<leader>R", require("rest-nvim").last, "Run last Request")
 -- Terminal
-
-map("n", "<leader>tf", "<CMD>FloatermNew --height=0.9 --width=0.9 --disposable <CR>", "New floating Terminal")
-map("n", "<leader>tv", "<CMD>FloatermNew --wintype=vsplit --disposable <CR>", "New vertical Terminal")
-map("n", "<leader>th", "<CMD>FloatermNew --wintype=split --disposable <CR>", "New horizontal Terminal")
 map(
-	"n",
-	"<leader>tm",
-	"<CMD>FloatermNew --height=0.9 --width=0.9 --disposable --title=MidnightCommander mc<CR>",
-	"New floating MidnightCommander"
+    "n",
+    "<leader>tf",
+    "<CMD>FloatermNew --height=0.9 --width=0.9 --disposable <CR>",
+    "New floating disposable Terminal"
+)
+map("n", "<leader>tF", "<CMD>FloatermNew --height=0.9 --width=0.9<CR>", "New floating Terminal")
+map("n", "<leader>tv", "<CMD>FloatermNew --wintype=vsplit --disposable <CR>", "New vertical Terminal")
+map("n", "<leader>th", "<CMD>Telescope highlights<CR>", "Search Highlight-Groups")
+map("n", "<leader>tH", "<CMD>FloatermNew --wintype=split --disposable <CR>", "New horizontal Terminal")
+map(
+    "n",
+    "<leader>tm",
+    "<CMD>FloatermNew --height=0.9 --width=0.9 --disposable --title=MidnightCommander mc<CR>",
+    "New floating MidnightCommander"
 )
 map(
-	"n",
-	"<leader>tg",
-	"<CMD>FloatermNew --height=0.9 --width=0.9 --disposable --title=LazyGit lazygit<CR>",
-	"New floating LazyGit"
+    "n",
+    "<leader>tg",
+    "<CMD>FloatermNew --height=0.9 --width=0.9 --disposable --title=LazyGit lazygit<CR>",
+    "New floating LazyGit"
 )
 
 -- goto-preview
@@ -94,16 +111,16 @@ map("n", "<leader>ld", "<CMD>Lspsaga show_cursor_diagnostics<CR>", "Show Cursor 
 map("n", "[e", "<CMD>Lspsaga diagnostics_jump_prev<CR>", "Jump to next Issue")
 map("n", "]e", "<CMD>Lspsaga diagnostics_jump_next<CR>", "Jump to previous Issue")
 map(
-	"n",
-	"[e",
-	"<CMD>lua require('lspsaga.diagnostics').goto_next({ severity = vim.diagnostics.severity.ERROR })<CR>",
-	"Jump to next Error"
+    "n",
+    "[e",
+    "<CMD>lua require('lspsaga.diagnostics').goto_next({ severity = vim.diagnostics.severity.ERROR })<CR>",
+    "Jump to next Error"
 )
 map(
-	"n",
-	"]e",
-	"<CMD>lua require('lspsaga.diagnostics').goto_prev({ severity = vim.diagnostics.severity.ERROR })<CR>",
-	"Jump to previous Error"
+    "n",
+    "]e",
+    "<CMD>lua require('lspsaga.diagnostics').goto_prev({ severity = vim.diagnostics.severity.ERROR })<CR>",
+    "Jump to previous Error"
 )
 map("n", "K", "<CMD>Lspsaga hover_doc<CR>", "Hover Diagnostics")
 map("t", "<F16>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], "Close Floatterm")

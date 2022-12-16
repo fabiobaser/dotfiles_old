@@ -6,19 +6,42 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 return require("packer").startup({
     function(use)
-        -- Package Manager
+        -- Package'nvim-treesitter/playground' Manager
         use({ "wbthomason/packer.nvim" })
 
-        -- {{{ THEMES
+        -- {{{ Themes
         use({
             "catppuccin/nvim",
             as = "catppuccin",
             config = function()
-                require("catppuccin").setup({ integrations = { fidget = true, lsp_saga = true } })
+                require("catppuccin").setup({
+                    integrations = {
+                        fidget = true,
+                        lsp_saga = true,
+                        navic = {
+                            enabled = true,
+                            custom_bg = "NONE",
+                        },
+                    },
+                    custom_highlights = function()
+                        return {
+                            Function = { fg = "#1e66f5" },
+                            ["@keyword.function"] = { fg = "#8839ef" },
+                            ["@keyword.builtin"] = { fg = "#Fe640b" },
+                        }
+                    end,
+                })
+                vim.cmd.colorscheme("catppuccin")
             end,
         })
-        use({ "navarasu/onedark.nvim" })
-        -- }}}
+        use({
+            "navarasu/onedark.nvim",
+            config = function()
+                require("onedark").setup({ style = "deep" })
+                -- require("onedark").load()
+            end,
+        })
+        --		}}}
 
         -- {{{ LSP
         use({
@@ -38,7 +61,14 @@ return require("packer").startup({
                     -- and will be called for each installed server that doesn't have
                     -- a dedicated handler.
                     function(server_name) -- default handler (optional)
-                        require("lspconfig")[server_name].setup({})
+                        require("lspconfig")[server_name].setup({
+                            on_attach = function(client, bufnr)
+                                -- Attaches nvim-navic to the current lsp-server if possible
+                                if client.server_capabilities.documentSymbolProvider then
+                                    require("nvim-navic").attach(client, bufnr)
+                                end
+                            end,
+                        })
                     end,
                     -- Next, you can provide a dedicated handler for specific servers.
                     -- For example, a handler override for the `rust_analyzer`:
@@ -61,34 +91,109 @@ return require("packer").startup({
                 })
             end,
         })
-        -- }}}
+        -- LSP }}}
 
-        -- Syntax and Code
+        -- {{{ Completion
+        use({ "ms-jpq/coq_nvim", branch = "coq" })
+        use({ "ms-jpq/coq.artifacts", branch = "artifacts" })
+        use({ "ms-jpq/coq.thirdparty", branch = "3p" })
+        -- }}} Completion
+
         use({
-            "m-demare/hlargs.nvim",
+            "folke/twilight.nvim",
             config = function()
-                require("hlargs").setup()
+                local twilight = require("twilight")
+                twilight.setup({
+                    context = 10,
+                    dimming = {
+                        inactive = false,
+                    },
+                    exclude = {
+                        "neo-tree",
+                        "alpha",
+                    },
+                })
+                -- twilight.enable()
+            end,
+        })
+        use({
+            "nguyenvukhang/nvim-toggler",
+            config = function()
+                require("nvim-toggler").setup({ remove_default_keybinds = true })
             end,
         })
         -- GeneralUI
-        use({ "nvim-tree/nvim-web-devicons" })
+        use({
+            "nvim-tree/nvim-web-devicons",
+            config = function()
+                require("nvim-web-devicons").setup({
+                    override = {},
+                })
+            end,
+        })
+        use("romgrk/fzy-lua-native")
+        use({
+            "sitiom/nvim-numbertoggle",
+            config = function()
+                require("numbertoggle").setup()
+            end,
+        })
+        use({
+            "norcalli/nvim-colorizer.lua",
+            config = function()
+                require("colorizer").setup()
+            end,
+        })
+        use({
+            "Pocco81/auto-save.nvim",
+            config = function()
+                require("auto-save").setup({ enabled = true })
+            end,
+        })
+        use({
+            "gelguy/wilder.nvim",
+            config = function()
+                local wilder = require("wilder")
+                wilder.setup({
+                    modes = { ":", "/", "?" },
+                })
+                wilder.set_option(
+                    "renderer",
+                    wilder.popupmenu_renderer({
+                        highlighter = {
+                            wilder.lua_pcre2_highlighter(), -- requires `luarocks install pcre2`
+                            wilder.lua_fzy_highlighter(), -- requires fzy-lua-native vim plugin found
+                            -- at https://github.com/romgrk/fzy-lua-native
+                        },
+                        highlights = {
+                            accent = wilder.make_hl(
+                                "WilderAccent",
+                                "Pmenu",
+                                { { a = 1 }, { a = 1 }, { foreground = "#f4468f" } }
+                            ),
+                        },
+                    })
+                )
+            end,
+        })
         use({
             "lewis6991/gitsigns.nvim",
             config = function()
                 require("gitsigns").setup()
             end,
         })
-
+        use({ "MunifTanjim/nui.nvim" })
         -- Window / Buffer Management
         use({ "famiu/bufdelete.nvim" })
-        use({ "rcarriga/nvim-notify" })
         use({ "j-morano/buffer_manager.nvim" })
         use({
-            "onsails/diaglist.nvim",
+            "s1n7ax/nvim-window-picker",
+            tag = "v1.*",
             config = function()
-                require("diaglist").init({ debug = false })
+                require("window-picker").setup()
             end,
         })
+        use("mrjones2014/smart-splits.nvim")
         use({
             "kylechui/nvim-surround",
             config = function()
@@ -138,9 +243,23 @@ return require("packer").startup({
         use({
             "nvim-telescope/telescope.nvim",
             tag = "0.1.0",
-            requires = { { "nvim-lua/plenary.nvim" } },
+            requires = {
+                "nvim-lua/plenary.nvim",
+                "nvim-telescope/telescope-ui-select.nvim",
+                "cljoly/telescope-repo.nvim",
+                "nvim-telescope/telescope-node-modules.nvim",
+                {
+                    "nvim-telescope/telescope-fzf-native.nvim",
+                    run = "make",
+                },
+                {
+                    "nvim-telescope/telescope-frecency.nvim",
+                    requires = { "kkharji/sqlite.lua" },
+                },
+            },
             config = function()
-                require("telescope").setup({
+                local telescope = require("telescope")
+                telescope.setup({
                     extensions = {
                         ["ui-select"] = {
                             require("telescope.themes").get_dropdown({}),
@@ -148,22 +267,16 @@ return require("packer").startup({
                     },
                 })
 
-                require("telescope").load_extension("ui-select")
+                telescope.load_extension("ui-select")
+                telescope.load_extension("repo")
+                telescope.load_extension("node_modules")
+                telescope.load_extension("fzf")
+                telescope.load_extension("frecency")
             end,
         })
 
-        use({ "nvim-telescope/telescope-ui-select.nvim" })
-
         use({
             "feline-nvim/feline.nvim",
-            after = "catppuccin",
-            config = function()
-                local ctp_feline = require("catppuccin.groups.integrations.feline")
-
-                require("feline").setup({
-                    components = ctp_feline.get(),
-                })
-            end,
         })
         use({
             "j-hui/fidget.nvim",
@@ -198,19 +311,29 @@ return require("packer").startup({
         use({
             "nvim-neo-tree/neo-tree.nvim",
             branch = "v2.x",
-            requires = {
-                "nvim-lua/plenary.nvim",
-                "MunifTanjim/nui.nvim",
-            },
+            requires = { "nvim-tree/nvim-web-devicons" },
             config = function()
                 require("neo-tree").setup({
                     close_if_last_window = true,
                     enable_git_status = true,
                     enable_diagnostics = true,
+                    follow_current_file = true,
+                    filesystem = {
+                        follow_current_file = true,
+                        group_empty_dirs = true,
+                    },
+                    buffers = {
+                        follow_current_file = true,
+                    },
                 })
             end,
         })
-
+        -- use({ "ms-jpq/chadtree", branch = "chad", run = "python3 -m chadtree deps" })
+        use({
+            "SmiteshP/nvim-navic",
+            requires = "neovim/nvim-lspconfig",
+            config = function() end,
+        })
         use({
             "akinsho/bufferline.nvim",
             tag = "v3.*",
@@ -247,12 +370,16 @@ return require("packer").startup({
 
         use({
             "nvim-treesitter/nvim-treesitter",
+            requires = { "nvim-treesitter/playground" },
             run = function()
                 local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
                 ts_update()
             end,
             config = function()
                 require("nvim-treesitter.configs").setup({
+                    highlight = {
+                        enable = true,
+                    },
                     textobjects = {
                         select = {
                             enables = true,
@@ -309,10 +436,14 @@ return require("packer").startup({
                 local null_ls = require("null-ls")
                 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+                local formatting = null_ls.builtins.formatting
+                local completion = null_ls.builtins.completion
+
                 null_ls.setup({
                     sources = {
-                        null_ls.builtins.formatting.stylua,
-                        null_ls.builtins.completion.spell,
+                        formatting.prettier,
+                        formatting.stylua,
+                        completion.spell,
                     },
                     on_attach = function(client, bufnr)
                         if client.supports_method("textDocument/formatting") then
@@ -331,31 +462,39 @@ return require("packer").startup({
         })
 
         use({
-            "hrsh7th/nvim-cmp",
-            event = "InsertEnter",
+            "rest-nvim/rest.nvim",
+            requires = { "nvim-lua/plenary.nvim" },
             config = function()
-                require("fabiobaser.configs.cmp")
+                require("rest-nvim").setup({})
             end,
         })
-        use({ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" })
 
-        use({
-            "hrsh7th/cmp-nvim-lsp",
-            after = "nvim-cmp",
-        })
-
-        use({
-            "hrsh7th/cmp-path",
-            after = "nvim-cmp",
-        })
-
-        use({
-            "David-Kunz/cmp-npm",
-            after = "nvim-cmp",
-            config = function()
-                require("cmp-npm").setup()
-            end,
-        })
+        -- use({
+        -- 	"hrsh7th/nvim-cmp",
+        -- 	event = "InsertEnter",
+        -- 	config = function()
+        -- 		require("fabiobaser.configs.cmp")
+        -- 	end,
+        -- })
+        -- use({ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" })
+        -- use({ "lukas-reineke/cmp-under-comparator" })
+        -- use({
+        -- 	"hrsh7th/cmp-nvim-lsp",
+        -- 	after = "nvim-cmp",
+        -- })
+        -- use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
+        -- use({
+        -- 	"hrsh7th/cmp-path",
+        -- 	after = "nvim-cmp",
+        -- })
+        --
+        -- use({
+        -- 	"David-Kunz/cmp-npm",
+        -- 	after = "nvim-cmp",
+        -- 	config = function()
+        -- 		require("cmp-npm").setup()
+        -- 	end,
+        -- })
 
         use({
             "SmiteshP/nvim-gps",

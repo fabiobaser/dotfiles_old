@@ -1,8 +1,6 @@
 local o = vim.o
 local g = vim.g
 
-vim.cmd.colorscheme("catppuccin")
-
 o.termguicolors = true
 
 -- Update Times
@@ -12,8 +10,11 @@ o.updatetime = 200
 -- Editor UI
 o.number = true
 o.relativenumber = true
+o.laststatus = 3
 o.signcolumn = "yes"
-o.cursorline = false
+o.cursorline = true
+o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+o.foldcolumn = "1"
 
 -- UX
 o.expandtab = true
@@ -37,6 +38,14 @@ g.mapleader = " "
 g.maplocalleader = " "
 
 -- Folding
+o.foldcolumn = "1"
 o.foldmethod = "marker"
 o.foldexpr = "nvim_treesitter#foldexpr()"
-o.foldlevelstart = 6
+o.foldlevel = 99
+o.foldlevelstart = 99
+o.foldenable = true
+
+-- COQ
+g.coq_settings = {
+	auto_start = true,
+}
