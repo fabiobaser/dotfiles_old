@@ -1,6 +1,12 @@
-require("fabiobaser.settings")
-require("fabiobaser.plugins")
-require("fabiobaser.keybinds")
-require("fabiobaser.autocommands")
+require("config.settings")
+require("config.lazy")
+require("config.keybinds")
 
-require("fabiobaser.configs.which-key")
+vim.cmd("colorscheme catppuccin")
+
+-- require("fabiobaser.settings")
+-- require("fabiobaser.plugins")
+-- require("fabiobaser.keybinds")
+-- require("fabiobaser.autocommands")
+
+-- require("fabiobaser.configs.which-key")

@@ -11,8 +11,9 @@ map("n", "<leader>fn", "<CMD>enew<CR>", "New File")
 map("n", "P", "<CMD>put<CR>", "Paste in new Line")
 map("n", "<leader>i", require("nvim-toggler").toggle, "Toggle Value")
 map("v", "<leader>i", require("nvim-toggler").toggle, "Toggle Value")
-map("n", "<C-s>", "<CMD>write<CR>", "Force Save File")
+map("n", "<leader>s", "<CMD>write<CR>", "Save File")
 map("i", "<C-s>", "<esc><CMD>write<CR>", "Force Save File")
+map("n", "<leader>w", "<C-w>")
 map("n", "<C-f>", "<CMD>lua vim.lsp.buf.format()<CR>", "Format Buffer")
 map("n", "<S-Up>", "<CMD>move -2<CR>", "Move Line Up")
 map("n", "<S-Down>", "<CMD>move +1<CR>", "Move Line Down")
@@ -25,7 +26,7 @@ map("n", "<leader>ut", "<CMD>Twilight<CR>", "Toggle Twilight")
 map("n", "<leader>uc", "<CMD>ColorizerToggle<CR>", "Toggle Color-Previews")
 
 -- Packer
-map("n", "<leader>pi", "<CMD>PackerInstall<CR>", "Packer Install")
+map("n", "<leader>pi", "<CMD>Lazy<CR>", "Lazy Package Manager")
 map("n", "<leader>pI", "<CMD>Mason<CR>", "Mason Installer")
 map("n", "<leader>pU", "<CMD>MasonUpdateAll<CR>", "Mason Update")
 map("n", "<leader>ps", "<CMD>PackerSync<CR>", "Packer Sync")
@@ -50,13 +51,13 @@ map("v", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.
 map("n", "<leader>ff", "<CMD>Telescope find_files<CR>", "Search for File")
 map("n", "<leader>fg", "<CMD>Telescope live_grep<CR>", "Search for Word")
 map("n", "<leader>fb", "<CMD>Telescope buffers<CR>", "Search Buffers")
-map("n", "<leader>fh", "<CMD>Telescope help_tags<CR>", "Search Help Tags")
+map("n", "<leader>fh", "<CMD>Telescope highlights<CR>", "Search Highlight Groups")
+map("n", "<leader>fH", "<CMD>Telescope help_tags<CR>", "Search Help Tags")
 map("n", "<leader>fR", "<CMD>Telescope frecency<CR>", "Search recent files")
 map("n", "<leader>fr", "<CMD>Telescope frecency workspace=CWD<CR>", "Search recent files in CWD")
 
 -- Buffer Menu
 map("n", "<leader>fe", "<esc><cmd>lua require('buffer_manager.ui').toggle_quick_menu()<cr>", "Show Buffer Quick Menu")
-map("n", "<leader>fh", "<CMD>Telescope help_tags<CR>", "Search Help Tags")
 
 -- Session Manager
 map("n", "<leader>Sl", "<CMD>SessionManager! load_last_session<CR>", "Load last session")
@@ -69,8 +70,8 @@ map("n", "<leader>S.", "<CMD>SessionManager! load_current_dir_session<CR>", "Loa
 map("n", "<S-l>", "<CMD>BufferLineCycleNext<CR>", "Next Buffer Tab")
 map("n", "<S-h>", "<CMD>BufferLineCyclePrev<CR>", "Previous Buffer Tab")
 
-map("n", "<leader>r", require("rest-nvim").run, "Run Request")
-map("n", "<leader>R", require("rest-nvim").last, "Run last Request")
+-- map("n", "<leader>r", require("rest-nvim").run, "Run Request")
+-- map("n", "<leader>R", require("rest-nvim").last, "Run last Request")
 -- Terminal
 map(
     "n",
@@ -104,8 +105,7 @@ map("n", "gpr", gotoPreview.goto_preview_references, "Preview References")
 
 -- LSP
 map("n", "<leader>lf", "<CMD>Lspsaga lsp_finder<CR>", "Find Definition")
-map("n", "<leader>la", "<CMD>Lspsaga code_action<CR>", "Code Action")
-map("v", "<leader>la", "<CMD>Lspsaga code_action<CR>", "Code Action")
+map("n", "<leader>la", "<CMD>CodeActionMenu<CR>", "Code Action")
 map("n", "<leader>lr", "<CMD>Lspsaga rename<CR>", "Rename")
 map("n", "<leader>ld", "<CMD>Lspsaga show_cursor_diagnostics<CR>", "Show Cursor Diagnostics")
 map("n", "[e", "<CMD>Lspsaga diagnostics_jump_prev<CR>", "Jump to next Issue")

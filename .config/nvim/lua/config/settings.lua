@@ -1,15 +1,14 @@
 local o = vim.o
 local g = vim.g
 
-o.termguicolors = true
-
 -- Update Times
 o.timeoutlen = 500
 o.updatetime = 200
 
 -- Editor UI
 o.number = true
-o.relativenumber = true
+o.termguicolors = true
+o.relativenumber = false
 o.laststatus = 3
 o.signcolumn = "yes"
 o.cursorline = true
@@ -18,6 +17,7 @@ o.foldcolumn = "1"
 
 -- UX
 o.expandtab = true
+o.undofile = true
 -- o.smarttab = true
 o.cindent = true
 -- o.autoindent = true
@@ -27,8 +27,8 @@ o.tabstop = 4
 o.shiftwidth = 0
 o.softtabstop = -1 -- If negative, shiftwidth value is used
 o.list = true
-o.listchars = "trail:·,nbsp:◇,tab:→ ,extends:▸,precedes:◂"
-
+-- vim.opt.listchars:append("space:⋅")
+-- vim.opt.listchars:append("eol:↴")
 o.clipboard = "unnamedplus"
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -44,8 +44,3 @@ o.foldexpr = "nvim_treesitter#foldexpr()"
 o.foldlevel = 99
 o.foldlevelstart = 99
 o.foldenable = true
-
--- COQ
-g.coq_settings = {
-	auto_start = true,
-}

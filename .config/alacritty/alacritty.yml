@@ -1,17 +1,16 @@
-
 import:
   # uncomment the flavour you want below:
-#  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
-  - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
+  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+    # - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
 #  - ~/.config/alacritty/catppuccin/catppuccin-frappe.yml
 #  - ~/.config/alacritty/catppuccin/catppuccin-latte.yml
 
-shell:
-  program: /opt/homebrew/bin/fish
-  args:
-    - -l
-    - -c
-    - "tmux new -As0"
+# shell:
+#   program: /opt/homebrew/bin/fish
+#   args:
+#     - -l
+#     - -c
+#     - "tmux new -As0"
 
 launcher:
   program: xdg-open
@@ -69,24 +68,113 @@ selection:
   save_to_clipboard: false
 
 key_bindings:
-  - { key: Plus,      mods: Command, action: "IncreaseFontSize" }
-  - { key: Minus,     mods: Command, action: "DecreaseFontSize" }
-  - { key: T,         mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["new-window"]}}
-  - { key: W,         mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["kill-pane"]}}
-  - { key: D,         mods: Command, command: { program : "/opt/homebrew/bin/tmux", args: ["split-window", "-v", "-c", "#{pane_current_path}"]}}
-  - { key: D,         mods: Command|Shift, command: { program : "/opt/homebrew/bin/tmux", args: ["split-window", "-h", "-c", "#{pane_current_path}"]}}
+  - { key: Plus, mods: Command, action: "IncreaseFontSize" }
+  - { key: Minus, mods: Command, action: "DecreaseFontSize" }
+  - {
+      key: T,
+      mods: Command,
+      command: { program: "/opt/homebrew/bin/tmux", args: ["new-window"] },
+    }
+  - {
+      key: W,
+      mods: Command,
+      command: { program: "/opt/homebrew/bin/tmux", args: ["kill-pane"] },
+    }
+  - {
+      key: D,
+      mods: Command,
+      command:
+        {
+          program: "/opt/homebrew/bin/tmux",
+          args: ["split-window", "-v", "-c", "#{pane_current_path}"],
+        },
+    }
+  - {
+      key: D,
+      mods: Command|Shift,
+      command:
+        {
+          program: "/opt/homebrew/bin/tmux",
+          args: ["split-window", "-h", "-c", "#{pane_current_path}"],
+        },
+    }
 
-  - { key: Left,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-L"]}}
-  - { key: Up,        mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-U"]}}
-  - { key: Down,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-D"]}}
-  - { key: Right,     mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-R"]}}
+  - {
+      key: Left,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-L"] },
+    }
+  - {
+      key: Up,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-U"] },
+    }
+  - {
+      key: Down,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-D"] },
+    }
+  - {
+      key: Right,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-pane", "-R"] },
+    }
 
-  - { key: Key1,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 1"] } }
-  - { key: Key2,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 2"] } }
-  - { key: Key3,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 3"] } }
-  - { key: Key4,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 4"] } }
-  - { key: Key5,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 5"] } }
-  - { key: Key6,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 6"] } }
-  - { key: Key7,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 7"] } }
-  - { key: Key8,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 8"] } }
-  - { key: Key9,      mods: Command,  command: { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 9"] } }
+  - {
+      key: Key1,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 1"] },
+    }
+  - {
+      key: Key2,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 2"] },
+    }
+  - {
+      key: Key3,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 3"] },
+    }
+  - {
+      key: Key4,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 4"] },
+    }
+  - {
+      key: Key5,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 5"] },
+    }
+  - {
+      key: Key6,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 6"] },
+    }
+  - {
+      key: Key7,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 7"] },
+    }
+  - {
+      key: Key8,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 8"] },
+    }
+  - {
+      key: Key9,
+      mods: Command,
+      command:
+        { program: "/opt/homebrew/bin/tmux", args: ["select-window", "-t 9"] },
+    }
