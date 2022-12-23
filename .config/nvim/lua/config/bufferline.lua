@@ -17,9 +17,6 @@ bufferline.setup({
 			fg = clrs.red,
 			bold = true,
 		},
-		buffer_selected = {
-			guifg = clrs.text,
-		},
 		indicator_selected = {
 			fg = clrs.base,
 		},

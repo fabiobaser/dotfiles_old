@@ -4,6 +4,6 @@ wefkj();
 
 wefkj().wefj();
 
-document.addEventListener("click", () => { });
+document.addEventListener("click", () => {});
 
-fetch("wefj");
+console.log("%c:", "color: violet");
