@@ -19,7 +19,6 @@ map("n", "<S-Up>", "<CMD>move -2<CR>", "Move Line Up")
 map("n", "<S-Down>", "<CMD>move +1<CR>", "Move Line Down")
 map("i", "<S-Up>", "<ESC><CMD>move -2<CR>", "Move Line Up")
 map("i", "<S-Down>", "<ESC><CMD>move +1<CR>", "Move Line Down")
-map("n", "s", "<Nop>")
 
 -- UI
 map("n", "<leader>ut", "<CMD>Twilight<CR>", "Toggle Twilight")
