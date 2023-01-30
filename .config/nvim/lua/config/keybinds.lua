@@ -114,12 +114,12 @@ map("n", "gP", gotoPreview.close_all_win, "Close all Previews")
 map("n", "gpr", gotoPreview.goto_preview_references, "Preview References")
 
 -- LSP
-map("n", "<leader>lf", "<CMD>Lspsaga lsp_finder<CR>", "Find Definition")
+-- map("n", "<leader>lf", "<CMD>Lspsaga lsp_finder<CR>", "Find Definition")
 map("n", "<leader>la", "<CMD>CodeActionMenu<CR>", "Code Action")
-map("n", "<leader>lr", "<CMD>Lspsaga rename<CR>", "Rename")
-map("n", "<leader>ld", "<CMD>TroubleToggle<CR>", "Toggle Diagnostics List")
-map("n", "[e", "<CMD>Lspsaga diagnostics_jump_prev<CR>", "Jump to next Issue")
-map("n", "]e", "<CMD>Lspsaga diagnostics_jump_next<CR>", "Jump to previous Issue")
+-- map("n", "<leader>lr", "<CMD>Lspsaga rename<CR>", "Rename")
+-- map("n", "<leader>ld", "<CMD>TroubleToggle<CR>", "Toggle Diagnostics List")
+-- map("n", "[e", "<CMD>Lspsaga diagnostics_jump_prev<CR>", "Jump to next Issue")
+-- map("n", "]e", "<CMD>Lspsaga diagnostics_jump_next<CR>", "Jump to previous Issue")
 map(
     "n",
     "[e",
@@ -132,5 +132,5 @@ map(
     "<CMD>lua require('lspsaga.diagnostics').goto_prev({ severity = vim.diagnostics.severity.ERROR })<CR>",
     "Jump to previous Error"
 )
-map("n", "K", "<CMD>Lspsaga hover_doc<CR>", "Hover Diagnostics")
+-- map("n", "K", "<CMD>Lspsaga hover_doc<CR>", "Hover Diagnostics")
 map("t", "<F16>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], "Close Floatterm")

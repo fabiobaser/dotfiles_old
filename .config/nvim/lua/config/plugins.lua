@@ -25,12 +25,40 @@ return {
         end,
     },
     {
+        "anuvyklack/windows.nvim",
+        dependencies = {
+            "anuvyklack/middleclass",
+            "anuvyklack/animation.nvim",
+        },
+        config = function()
+            vim.o.winwidth = 30
+            vim.o.winminwidth = 30
+            vim.o.equalalways = false
+            require("windows").setup()
+        end,
+    },
+    {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v2.x",
         dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
         config = function()
             require("neo-tree").setup({
                 enable_git_status = true,
+                git_status = {
+                    symbols = {
+                        -- Change type
+                        added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+                        modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
+                        deleted = "✖", -- this can only be used in the git_status source
+                        renamed = "", -- this can only be used in the git_status source
+                        -- Status type
+                        untracked = "",
+                        ignored = "",
+                        unstaged = "",
+                        staged = "",
+                        conflict = "",
+                    },
+                },
                 close_if_last_window = true,
                 enable_diagnostics = true,
                 buffers = {
@@ -45,14 +73,19 @@ return {
         end,
     },
     {
+        "folke/todo-comments.nvim",
+        config = function()
+            require("todo-comments").setup({})
+        end,
+    },
+    {
         "folke/trouble.nvim",
         config = function()
-            require("trouble").setup({
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            })
+            require("trouble").setup({})
         end,
+        keys = {
+            { "<leader>lt", "<cmd>TroubleToggle<cr>", desc = "Toggle Diagnostics Window" },
+        },
     },
     {
         "folke/which-key.nvim",
@@ -88,7 +121,13 @@ return {
     {
         "rcarriga/nvim-notify",
         config = function()
-            vim.notify = require("notify")
+            local notify = require("notify")
+            notify.setup({
+                render = "compact",
+                stages = "slide",
+                timeout = 1500,
+            })
+            vim.notify = notify
         end,
     },
     {
@@ -112,6 +151,22 @@ return {
         end,
     },
     -- UTILS
+    {
+        "aserowy/tmux.nvim",
+        config = function()
+            require("tmux").setup()
+        end,
+    },
+    {
+        "stevearc/stickybuf.nvim",
+        config = function()
+            require("stickybuf").setup({
+                buftype = {
+                    terminal = "buftype",
+                },
+            })
+        end,
+    },
     {
         "akinsho/toggleterm.nvim",
         config = function()
@@ -172,6 +227,57 @@ return {
         end,
     },
     {
+        "nvim-neotest/neotest",
+        config = function()
+            require("neotest").setup({
+                adapters = {
+                    require("neotest-vitest"),
+                },
+            })
+        end,
+        dependencies = {
+            "antoinemadec/FixCursorHold.nvim",
+            "marilari88/neotest-vitest",
+        },
+        keys = {
+            {
+                "<leader>Tr",
+                function()
+                    require("neotest").run.run()
+                end,
+                desc = "Runs nearest Test",
+            },
+            {
+                "<leader>TR",
+                function()
+                    require("neotest").run.run(vim.fn.expand("%"))
+                end,
+                desc = "Runs the current File",
+            },
+            {
+                "<leader>Td",
+                function()
+                    require("neotest").run.run({ strategy = "dap" })
+                end,
+                desc = "Debug nearest Test",
+            },
+            {
+                "<leader>Ts",
+                function()
+                    require("neotest").run.stop()
+                end,
+                desc = "Stop nearest Test",
+            },
+            {
+                "<leader>Ta",
+                function()
+                    require("neotest").run.attach()
+                end,
+                desc = "Attach to nearest Test",
+            },
+        },
+    },
+    {
         "ggandor/leap.nvim",
         dependencies = { "tpope/vim-repeat" },
         config = function()
@@ -190,30 +296,30 @@ return {
             require("Comment").setup({})
         end,
     },
-    {
-        "gelguy/wilder.nvim",
-        dependencies = { "romgrk/fzy-lua-native" },
-        config = function()
-            local wilder = require("wilder")
-            wilder.setup({
-                modes = { ":", "/", "?" },
-            })
-            wilder.set_option(
-                "renderer",
-                wilder.popupmenu_renderer({
-                    highlighter = {
-                        wilder.lua_pcre2_highlighter(), -- requires `luarocks install pcre2`
-                        wilder.lua_fzy_highlighter(), -- requires fzy-lua-native vim plugin found
-                    },
-                })
-            )
-        end,
-    },
+    -- {
+    --     "gelguy/wilder.nvim",
+    --     dependencies = { "romgrk/fzy-lua-native" },
+    --     config = function()
+    --         local wilder = require("wilder")
+    --         wilder.setup({
+    --             modes = { ":", "/", "?" },
+    --         })
+    --         wilder.set_option(
+    --             "renderer",
+    --             wilder.popupmenu_renderer({
+    --                 highlighter = {
+    --                     wilder.lua_pcre2_highlighter(), -- requires `luarocks install pcre2`
+    --                     wilder.lua_fzy_highlighter(), -- requires fzy-lua-native vim plugin found
+    --                 },
+    --             })
+    --         )
+    --     end,
+    -- },
     {
         "Shatur/neovim-session-manager",
         config = function()
             require("session_manager").setup({
-                autoload_mode = require("session_manager.config").AutoloadMode.CurrentDir,
+                autoload_mode = require("session_manager.config").AutoloadMode.Disabled,
             }) -- Possible values: Disabled, CurrentDir, LastSession
         end,
     },
@@ -231,14 +337,6 @@ return {
         end,
     },
     {
-        "ziontee113/icon-picker.nvim",
-        config = function()
-            require("icon-picker").setup({
-                disable_legacy_commands = true,
-            })
-        end,
-    },
-    {
         "j-hui/fidget.nvim",
         config = function()
             require("fidget").setup({
@@ -248,8 +346,35 @@ return {
             })
         end,
     },
-    "VonHeikemen/searchbox.nvim",
+    "shortcuts/no-neck-pain.nvim",
+    "vimpostor/vim-tpipeline",
+    "rajasegar/vim-pnpm",
+    -- "VonHeikemen/searchbox.nvim",
+    { "noahfrederick/vim-skeleton" },
     -- LSP
+    {
+        "folke/noice.nvim",
+        config = function()
+            require("noice").setup({
+                cmdline = {
+                    enabled = true,
+                    view = "cmdline_popup",
+                },
+                notify = {
+                    enabled = false,
+                },
+            })
+        end,
+    },
+    {
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        config = function()
+            require("lsp_lines").setup()
+            vim.diagnostic.config({
+                virtual_text = false,
+            })
+        end,
+    },
     { "neovim/nvim-lspconfig" },
     {
         "williamboman/mason-lspconfig.nvim",
@@ -341,6 +466,7 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope-ui-select.nvim",
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
             "cljoly/telescope-repo.nvim",
             "nvim-telescope/telescope-node-modules.nvim",
             {
@@ -361,9 +487,16 @@ return {
                     ["ui-select"] = {
                         require("telescope.themes").get_dropdown({}),
                     },
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                        case_mode = "smart_case",
+                    },
                 },
             })
 
+            telescope.load_extension("fzf")
             telescope.load_extension("ui-select")
             telescope.load_extension("repo")
             telescope.load_extension("node_modules")
@@ -380,14 +513,20 @@ return {
     },
     {
         "glepnir/lspsaga.nvim",
-        branch = "main",
+        event = "BufRead",
         config = function()
             local saga = require("lspsaga")
-
-            saga.init_lsp_saga({
-                custom_kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
-            })
+            saga.setup({})
         end,
+        keys = {
+            { "K", "<cmd>Lspsaga hover_doc<cr>", desc = "Show Doc on Hover" },
+            { "<leader>sc", "<cmd>Lspsaga rename<cr>", desc = "Rename Symbol" },
+            { "<leader>lr", "<cmd>Lspsaga rename<cr>", desc = "Rename Symbol" },
+            { "<leader>ld", "<cmd>Lspsaga peek_definition<cr>", desc = "Peek Definition" },
+            { "<leader>lD", "<cmd>Lspsaga goto_definition<cr>", desc = "Goto Definition" },
+            { "[e", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Jumpt to next Issue" },
+            { "]e", "<cmd>Lspsaga diagnostic_jump_prev<cr>", desc = "Jumpt to prev Issue" },
+        },
     },
     {
         "weilbith/nvim-code-action-menu",

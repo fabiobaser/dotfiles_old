@@ -11,10 +11,9 @@ bufferline.setup({
 		},
 		background = {
 			bg = clrs.mantle,
-			fg = clrs.overlay0,
 		},
 		tab_selected = {
-			fg = clrs.red,
+			fg = clrs.text,
 			bold = true,
 		},
 		indicator_selected = {
@@ -23,8 +22,8 @@ bufferline.setup({
 	},
 	options = {
 		separator_style = { nil, nil },
-		diagnostics = "nvim_lsp",
-		diagnostics_indicator = function(count, level)
+		infos = "nvim_lsp",
+		infos_indicator = function(count, level)
 			local icon = level:match("error") and " " or " "
 			return " " .. icon .. count
 		end,

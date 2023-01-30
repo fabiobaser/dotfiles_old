@@ -15,5 +15,5 @@ local plugins = require("config.plugins")
 require("lazy").setup(plugins, {
 	defaults = { lazy = false },
 	install = { missing = true },
-	checker = { enabled = true },
+	checker = { enabled = false },
 })

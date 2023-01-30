@@ -55,8 +55,9 @@ plugins=(
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source $ZSH/oh-my-zsh.sh
 
-alias v="nvim"
-alias vrc="nvim ~/.config/nvim/init.vim"
+alias v="nvim --listen /tmp/nvimsocket"
+alias vrc="nvim ~/.config/nvim/"
+alias wezrc="nvim ~/.config/wezterm/wezterm.lua"
 alias zshconfig="nvim ~/.zshrc"
 alias zshrc="zshconfig"
 alias zshreload="source ~/.zshrc"
@@ -69,6 +70,14 @@ alias ta="tmux attach -t"
 alias td="tmux detach"
 
 alias tm="tmuxinator"
+function vpnpw {
+    local pw=$(op item get --fields password MondayVPN)
+    local otp=$(op item get --otp MondayVPN)
+    local key="${pw}${otp}"
+    echo $key | tr -d '\n' | pbcopy
+    # echo $key # not needed when executed by a hotkey
+}
+
 function tmo {
     project=${PWD##*/}
 

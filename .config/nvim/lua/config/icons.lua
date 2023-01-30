@@ -17,6 +17,15 @@ local icons = {
 		color = "#519aba",
 		name = "Nx",
 	},
+	["vite.config.ts"] = {
+		icon = "☇",
+		color = "#bd34ff",
+		name = "Vite",
+	},
+	["vite.config.js"] = {
+		icon = "☇",
+		name = "Vite",
+	},
 	[".eslintrc.json"] = {
 		icon = "",
 		color = "#519aba",
@@ -1318,7 +1327,7 @@ local icons = {
 		name = "Tsx",
 	},
 	["tsx"] = {
-		icon = "",
+		icon = "",
 		color = "#519aba",
 		cterm_color = "67",
 		name = "Tsx",
