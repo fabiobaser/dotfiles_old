@@ -1,10 +1,6 @@
 {
-  "log": {
+  "import": {
     "prefix": "log",
     "body": ["console.log($1)"]
-  },
-  "clog": {
-    "prefix": "clog",
-    "body": ["console.log(\"%c$1:\", \"color: violet\", $2)"]
   }
 }

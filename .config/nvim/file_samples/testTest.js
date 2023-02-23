@@ -1,11 +1,7 @@
-// TODO: Hier muss was gefixed werden
-describe("App", () => {
-  expect(true).toBe(true);
-});
+const a = "hi";
+let c = 10;
 
-// PERF: Hier geht besser
-// HACK: das sieht komisch aus
-// TODO: joooo
-// NOTE: das ist so
-// FIX: das darf nicht so
-// WARNING: ???????????
+c += 100;
+c *= 45;
+
+const b = 10 * 12;

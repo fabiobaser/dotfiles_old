@@ -30,43 +30,15 @@ map("n", "K", function()
     end
 end, "Close all Folds")
 
--- UI
-map("n", "<leader>ut", "<CMD>Twilight<CR>", "Toggle Twilight")
-map("n", "<leader>uc", "<CMD>ColorizerToggle<CR>", "Toggle Color-Previews")
-
--- Packer
 map("n", "<leader>pi", "<CMD>Lazy<CR>", "Lazy Package Manager")
-map("n", "<leader>pI", "<CMD>Mason<CR>", "Mason Installer")
-map("n", "<leader>pU", "<CMD>MasonUpdateAll<CR>", "Mason Update")
-map("n", "<leader>ps", "<CMD>PackerSync<CR>", "Packer Sync")
-map("n", "<leader>pS", "<CMD>PackerStatus<CR>", "Packer Status")
 
 -- Bufdelete
 map("n", "<leader>c", "<CMD>lua require('bufdelete').bufdelete(0, false)<CR>", "Close Buffer")
 map("n", "<leader>C", "<CMD>lua require('bufdelete').bufdelete(0, true)<CR>", "Force close Buffer")
 
--- NeoTree
-map("n", "<leader>e", "<CMD>Neotree toggle<CR>", "Toggle Explorer")
-map("n", "<leader>o", "<CMD>Neotree focus<CR>", "Focus Explorer")
-
--- Aerial (Symbol Outline)
-map("n", "<leader>lS", "<CMD>AerialToggle<CR>", "Toggle Outline")
-
 -- Commenting
 map("n", "<leader>/", require("Comment.api").toggle.linewise.current, "Comment Line")
 map("v", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>", "Comment Block")
-
--- Telescope (Search)
-map("n", "<leader>ff", "<CMD>Telescope find_files<CR>", "Search for File")
-map("n", "<leader>fg", "<CMD>Telescope live_grep<CR>", "Search for Word")
-map("n", "<leader>fb", "<CMD>Telescope buffers<CR>", "Search Buffers")
-map("n", "<leader>fh", "<CMD>Telescope highlights<CR>", "Search Highlight Groups")
-map("n", "<leader>fH", "<CMD>Telescope help_tags<CR>", "Search Help Tags")
-map("n", "<leader>fR", "<CMD>Telescope frecency<CR>", "Search recent files")
-map("n", "<leader>fr", "<CMD>Telescope frecency workspace=CWD<CR>", "Search recent files in CWD")
-
--- Buffer Menu
-map("n", "<leader>fe", "<esc><cmd>lua require('buffer_manager.ui').toggle_quick_menu()<cr>", "Show Buffer Quick Menu")
 
 -- Session Manager
 map("n", "<leader>Sl", "<CMD>SessionManager! load_last_session<CR>", "Load last session")
@@ -133,4 +105,4 @@ map(
     "Jump to previous Error"
 )
 -- map("n", "K", "<CMD>Lspsaga hover_doc<CR>", "Hover Diagnostics")
-map("t", "<F16>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], "Close Floatterm")
+map("t", "<F16>", [[<C-\><C-n><cmd>:q<CR>]], "Close Floatterm")

@@ -25,3 +25,18 @@ github = 'Aloxaf/fzf-tab'
 
 [plugins.nx-completions]
 github = 'jscutlery/nx-completion'
+
+[plugins.abbrev-alias]
+github = 'momo-lab/zsh-abbrev-alias'
+
+[plugins.auto-fortune-cowsay]
+github = 'babasbot/auto-fortune-cowsay-zsh'
+
+[plugins.autopair]
+github = 'hlissner/zsh-autopair'
+
+[plugins.last-working-dir-tmux]
+github = 'Curly-Mo/last-working-dir-tmux'
+
+[plugins.tmux-zsh-vim-titles]
+github = 'MikeDacre/tmux-zsh-vim-titles'
