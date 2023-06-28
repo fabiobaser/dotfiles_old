@@ -1,0 +1,14 @@
+{
+  "tolgeeUseTranslate": {
+    "prefix": "useT",
+    "body": "const { t } = useTranslate()$1"
+  },
+  "testDescribe": {
+    "prefix": "describe",
+    "body": "describe(() => {\n$1\n})"
+  },
+  "testIt": {
+    "prefix": "it",
+    "body": "it(async () => {\n$1\n})"
+  }
+}

@@ -3,6 +3,7 @@ local g = vim.g
 
 -- Update Times
 o.timeoutlen = 500
+o.ttimeoutlen = 5
 o.updatetime = 200
 
 -- Editor UI
@@ -42,3 +43,5 @@ o.foldcolumn = "1"
 o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 o.foldlevelstart = 99
 o.foldenable = true
+
+o.cmdheight = 0

@@ -1,10 +1,22 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# Profiling Start-Block
-# zmodload zsh/zprof
+if [ "$TMUX" = "" ]; then /opt/homebrew/bin//tmux; fi
 
 #Enable Command-Correction
 setopt correct
+
+# History Setup
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+HISTFILE=$HOME/.zhistory
+HISTSIZE=9999999999
+SAVEHIST=$HISTSIZE
+
+# autocompletion using arrow keys (based on history)
+bindkey '\e[A' history-search-backward
+bindkey '\e[B' history-search-forward
 
 if [[ -n ${ZSH_VERSION-} ]]; then
   autoload -U +X compinit && if [[ ${ZSH_DISABLE_COMPFIX-} = true ]]; then
@@ -27,6 +39,7 @@ export JAVA_HOME=$(/usr/libexec/java_home -v 11)
 export ZSH="/Users/fabiobaser/.oh-my-zsh"
 export LANG=de_DE.UTF-8
 export FZF_DEFAULT_COMMAND="fd -H -t f -E .git -E .DS_Store"
+export DISABLE_AUTO_TITLE=true
 
 #COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd.mm.yyyy"
@@ -43,19 +56,20 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 zstyle ':fzf-tab:*' switch-group ',' '.'
 
 #ZSH Plugins
-plugins=(
-  colored-man-pages
-  brew
-  1password
-  colorize
-  command-not-found
-  fnm
-  tmuxinator
-  z
-)
+# plugins=(
+#   colored-man-pages
+#   brew
+#   1password
+#   colorize
+#   command-not-found
+#   fnm
+#   z
+# )
 
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
+
+# brew bundle install
 
 alias v="nvim"
 alias zv="z $1"
@@ -64,19 +78,10 @@ alias zshconfig="nvim ~/.zshrc"
 alias zshrc="zshconfig"
 alias zshreload="source ~/.zshrc"
 
-function vpnpw {
-    local pw=$(op item get --fields password MondayVPN)
-    local otp=$(op item get --otp MondayVPN)
-    local key="${pw}${otp}"
-    echo $key | tr -d '\n' | pbcopy
-    # echo $key # not needed when executed by a hotkey
-}
-
-# setWallpaper ~/wallpaper.jpg
-
-alias l="exa -1 --icons --group-directories-first --git-ignore"
+alias l="exa -1 --icons --group-directories-first"
 alias la="exa --icons -a --group-directories-first"
 alias ll="exa -T -L 3 --icons --group-directories-first --git-ignore -I node_modules"
+alias lla="exa -T -L 3 -a --icons --group-directories-first -I node_modules"
 alias lll="exa -T -L 3 --icons --group-directories-first"
 
 alias c="clear;export NEW_LINE_BEFORE_PROMPT=0; printf '\e[3J'" #tput reset
@@ -102,10 +107,6 @@ alias j10="export JAVA_HOME=`/usr/libexec/java_home -v 10`; java -version"
 alias j9="export JAVA_HOME=`/usr/libexec/java_home -v 9`; java -version"
 alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
 
-# Setup Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 eval "$(sheldon source)"
 
@@ -116,7 +117,12 @@ abbrev-alias n="npm"
 abbrev-alias -r ni="n install"
 abbrev-alias -r nr="n run"
 
+abbrev-alias bi="brew install"
+abbrev-alias -r bic="bi --cask"
+
 abbrev-alias t="tmux"
+abbrev-alias tp="tmuxp load"
+abbrev-alias -r tpf="tp frontend"
 
 abbrev-alias p="pnpm"
 abbrev-alias -r pi="p install"
@@ -131,13 +137,8 @@ abbrev-alias d="docker"
 abbrev-alias -r db="d build"
 
 eval "$(starship init zsh)"
-# Profiling End-Block
-# zprof
 
 # pnpm
 export PNPM_HOME="/Users/fabiobaser/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
-# pnpm end
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+SPACESHIP_PROMPT_ASYNC=FALSE

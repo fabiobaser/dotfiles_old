@@ -1,0 +1,11 @@
+import { render, screen } from "@testing-library/react";
+import @CLASS_NAME@ from "./@CLASS_NAME@";
+
+describe("@CLASS_NAME@", () => {
+    it("renders", async () => {
+        const renderResult = render(<@CLASS_NAME@/>);
+
+        expect(renderResult).toMatchSnapshot();
+    });
+});
+

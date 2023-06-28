@@ -23,20 +23,29 @@ github = 'MichaelAquilina/zsh-you-should-use'
 [plugins.fzf-tab]
 github = 'Aloxaf/fzf-tab'
 
-[plugins.nx-completions]
-github = 'jscutlery/nx-completion'
-
 [plugins.abbrev-alias]
 github = 'momo-lab/zsh-abbrev-alias'
-
-[plugins.auto-fortune-cowsay]
-github = 'babasbot/auto-fortune-cowsay-zsh'
 
 [plugins.autopair]
 github = 'hlissner/zsh-autopair'
 
-[plugins.last-working-dir-tmux]
-github = 'Curly-Mo/last-working-dir-tmux'
+[plugins.zoxide]
+github = 'ajeetdsouza/zoxide'
 
-[plugins.tmux-zsh-vim-titles]
-github = 'MikeDacre/tmux-zsh-vim-titles'
+[plugins.almostontop]
+github = 'Valiev/almostontop'
+
+[plugins.autosuggestions]
+github = 'zsh-users/zsh-autosuggestions'
+
+[plugins.kitty]
+github = 'redxtech/zsh-kitty'
+
+[plugins.fzf-history-search]
+github = 'joshskidmore/zsh-fzf-history-search'
+
+[plugins.confer]
+github = 'SleepyBag/zsh-confer'
+
+# [plugins.spaceship]
+# github = 'spaceship-prompt/spaceship-prompt'

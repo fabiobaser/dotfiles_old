@@ -171,22 +171,6 @@
             "type" : "variable_if"
           } ],
           "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "e",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "consumer_key_code" : "fastforward"
-          } ],
-          "conditions" : [ {
-            "name" : "caps_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
         } ]
       }, {
         "description" : "f-mode for brackets",
@@ -1190,84 +1174,7 @@
       "treat_as_built_in_keyboard" : false
     }, {
       "disable_built_in_keyboard_if_exists" : false,
-      "fn_function_keys" : [ {
-        "from" : {
-          "key_code" : "f1"
-        },
-        "to" : [ {
-          "key_code" : "f1"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f2"
-        },
-        "to" : [ {
-          "key_code" : "f2"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f3"
-        },
-        "to" : [ {
-          "key_code" : "f3"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f4"
-        },
-        "to" : [ {
-          "key_code" : "f4"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f5"
-        },
-        "to" : [ {
-          "key_code" : "f5"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f6"
-        },
-        "to" : [ {
-          "key_code" : "f6"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f7"
-        },
-        "to" : [ {
-          "key_code" : "f7"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f8"
-        },
-        "to" : [ {
-          "key_code" : "f8"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f9"
-        },
-        "to" : [ {
-          "key_code" : "f9"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f10"
-        },
-        "to" : [ {
-          "key_code" : "f10"
-        } ]
-      }, {
-        "from" : {
-          "key_code" : "f11"
-        },
-        "to" : [ {
-          "key_code" : "f11"
-        } ]
-      } ],
+      "fn_function_keys" : [ ],
       "identifiers" : {
         "is_keyboard" : true,
         "is_pointing_device" : false,
@@ -1278,17 +1185,17 @@
       "manipulate_caps_lock_led" : true,
       "simple_modifications" : [ {
         "from" : {
-          "key_code" : "y"
+          "key_code" : "z"
         },
         "to" : [ {
-          "key_code" : "z"
+          "key_code" : "y"
         } ]
       }, {
         "from" : {
-          "key_code" : "z"
+          "key_code" : "y"
         },
         "to" : [ {
-          "key_code" : "y"
+          "key_code" : "z"
         } ]
       } ],
       "treat_as_built_in_keyboard" : false

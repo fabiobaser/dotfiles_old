@@ -1,0 +1,10 @@
+import React from "react"
+
+function @CLASS_NAME@() {
+
+    return (
+        <div>hi</div>
+    )
+}
+
+export default @CLASS_NAME@

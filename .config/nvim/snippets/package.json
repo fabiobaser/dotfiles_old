@@ -1,16 +1,23 @@
 {
-  "name": "fabios-snippets",
-  "contributes": {
-    "snippets": [
-      {
-        "language": [
-          "javascript",
-          "typescript",
-          "typescriptreact",
-          "javascriptreact"
-        ],
-        "path": "./js.json"
-      }
-    ]
-  }
+    "name": "fabios-snippets",
+    "contributes": {
+        "snippets": [
+            {
+                "language": [
+                    "javascript",
+                    "typescript",
+                    "typescriptreact",
+                    "javascriptreact"
+                ],
+                "path": "./js.json"
+            },
+            {
+                "language": [
+                    "typescript",
+                    "typescriptreact"
+                ],
+                "path": "./ts.json"
+            }
+        ]
+    }
 }

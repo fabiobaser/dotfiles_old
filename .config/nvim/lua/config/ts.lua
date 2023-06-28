@@ -1,5 +1,5 @@
 require("nvim-treesitter.configs").setup({
-	ensure_installed = "all",
+	ensure_installed = { "typescript", "json" },
 	highlight = {
 		enable = true,
 	},

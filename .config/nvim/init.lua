@@ -1,9 +1,9 @@
 require("config.settings")
 require("config.lazy")
 require("config.keybinds")
+require("config.autocommands")
 
 vim.cmd("colorscheme catppuccin")
-vim.api.nvim_create_augroup("JABS", {})
 
 -- require("fabiobaser.settings")
 -- require("fabiobaser.plugins")

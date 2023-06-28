@@ -2,8 +2,12 @@
 
 # ~/.config/starship.toml
 
+add_newline = true
+
 [character]
-error_symbol = "[✖](bold red) "
+success_symbol = ""
+error_symbol = ""
+# error_symbol = "[✖](bold red) "
 
 [cmd_duration]
 min_time = 2_000  # Show command duration over 10,000 milliseconds (=10 sec)
@@ -14,6 +18,7 @@ truncation_length = 3
 format = "[$path]($style)[$lock_symbol]($lock_style) "
 
 [git_branch]
+disabled = false
 format = " [$symbol$branch]($style) "
 style = "bold yellow"
 
@@ -25,6 +30,7 @@ style = "bold white"
 format = '[\($state( $progress_current of $progress_total)\)]($style) '
 
 [git_status]
+disabled = false
 conflicted = "⚔️ "
 ahead = " ×${count} "
 behind = " ×${count}"
@@ -39,11 +45,11 @@ style = "bright-white"
 format = "$all_status$ahead_behind"
 
 [hostname]
-ssh_only = false
+ssh_only = true
 format = "<[$hostname]($style)>"
 trim_at = "-"
 style = "bold dimmed white"
-disabled = true
+disabled = false
 
 [julia]
 format = "[$symbol$version]($style) "
@@ -52,7 +58,7 @@ style = "bold green"
 
 [memory_usage]
 format = "$symbol[${ram}( | ${swap})]($style) "
-threshold = 70
+threshold = 90
 style = "bold dimmed white"
 disabled = false
 symbol = " "
@@ -85,4 +91,3 @@ show_always = false
 [nodejs]
 disabled = true
 format = "via [🤖 $version](bold green) "
-
