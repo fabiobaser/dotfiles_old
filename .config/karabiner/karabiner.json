@@ -58,6 +58,25 @@
           } ]
         } ]
       }, {
+        "description" : "z and y swap",
+        "manipulators" : [ {
+          "from" : {
+            "key_code" : "z"
+          },
+          "to" : [ {
+            "key_code" : "y"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "y"
+          },
+          "to" : [ {
+            "key_code" : "z"
+          } ],
+          "type" : "basic"
+        } ]
+      }, {
         "description" : "caps-layer for hjkl movement and media control",
         "manipulators" : [ {
           "from" : {
@@ -132,6 +151,22 @@
           },
           "to" : [ {
             "key_code" : "delete_forward"
+          } ],
+          "conditions" : [ {
+            "name" : "caps_mode",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "v",
+            "modifiers" : {
+              "optional" : [ "any" ]
+            }
+          },
+          "to" : [ {
+            "shell_command" : "/Users/fabiobaser/getMondayVPN.sh"
           } ],
           "conditions" : [ {
             "name" : "caps_mode",

@@ -1,6 +1,8 @@
 local o = vim.o
 local g = vim.g
 
+o.swapfile = false
+
 -- Update Times
 o.timeoutlen = 500
 o.ttimeoutlen = 5

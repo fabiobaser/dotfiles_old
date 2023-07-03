@@ -44,8 +44,8 @@ github = 'redxtech/zsh-kitty'
 [plugins.fzf-history-search]
 github = 'joshskidmore/zsh-fzf-history-search'
 
-[plugins.confer]
-github = 'SleepyBag/zsh-confer'
+[plugins.nx-completion]
+github = 'jscutlery/nx-completion'
 
 # [plugins.spaceship]
 # github = 'spaceship-prompt/spaceship-prompt'
