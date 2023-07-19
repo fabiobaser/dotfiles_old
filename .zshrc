@@ -1,3 +1,4 @@
+# starts tmux if not already running (checked via $TMUX env var)
 if [ "$TMUX" = "" ]; then /opt/homebrew/bin//tmux; fi
 
 #Enable Command-Correction
@@ -17,6 +18,7 @@ SAVEHIST=$HISTSIZE
 # autocompletion using arrow keys (based on history)
 bindkey '\e[A' history-search-backward
 bindkey '\e[B' history-search-forward
+export ZSH_FZF_HISTORY_SEARCH_BIND='^f'
 
 if [[ -n ${ZSH_VERSION-} ]]; then
   autoload -U +X compinit && if [[ ${ZSH_DISABLE_COMPFIX-} = true ]]; then
@@ -62,6 +64,8 @@ export EDITOR="/opt/homebrew/bin/nvim"
 export LANG=de_DE.UTF-8
 export FZF_DEFAULT_COMMAND="fd -H -t f -E .git -E .DS_Store"
 export DISABLE_AUTO_TITLE=true
+export ZSH_TMUX_AUTO_TITLE_TARGET="window" # plugin tmux-auto-title should change the window not 'pane'
+export ZSH_TMUX_AUTO_TITLE_IDLE_TEXT="%pwd"
 
 #COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd.mm.yyyy"
@@ -113,7 +117,6 @@ alias hidefiles="defaults write com.apple.finder AppleShowAllFiles NO"
 alias cleardock="defaults write com.apple.dock persistent-apps -array; killall Dock"
 
 
-
 eval "$(sheldon source)"
 
 abbrev-alias lg="lazygit"
@@ -127,8 +130,10 @@ abbrev-alias bi="brew install"
 abbrev-alias -r bic="bi --cask"
 
 abbrev-alias t="tmux"
+abbrev-alias -r tmuxreload="t source-file ~/.tmux.conf"
 abbrev-alias tp="tmuxp load"
 abbrev-alias -r tpf="tp frontend"
+abbrev-alias -r tpc="tp collector"
 
 abbrev-alias p="pnpm"
 abbrev-alias -r pi="p install"

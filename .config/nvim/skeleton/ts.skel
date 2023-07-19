@@ -1,0 +1,5 @@
+function @CLASS_NAME@() {
+    $1
+}
+
+export default @CLASS_NAME@
