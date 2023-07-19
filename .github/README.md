@@ -3,7 +3,7 @@
 ## Installation of Dotfiles
 
 ```bash
-git clone --bare https://github.com/fabiobaser/dotfiles .dotfiles
+git clone --bare git@github.com:fabiobaser/dotfiles.git .dotfiles
 ```
 
 ```bash
