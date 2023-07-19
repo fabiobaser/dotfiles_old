@@ -27,16 +27,38 @@ if [[ -n ${ZSH_VERSION-} ]]; then
   autoload -U +X bashcompinit && bashcompinit
 fi
 
+
+
+if [[ $(uname) == "Darwin" ]]; then
+    echo "Detected macOS"
+
+    eval "$(/opt/homebrew/bin/fnm env --use-on-cd)"
+    
+    # Java Commands
+    alias j12="export JAVA_HOME=`/usr/libexec/java_home -v 12`; java -version"
+    alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
+    alias j10="export JAVA_HOME=`/usr/libexec/java_home -v 10`; java -version"
+    alias j9="export JAVA_HOME=`/usr/libexec/java_home -v 9`; java -version"
+    alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
+    export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+    export ZSH="/Users/fabiobaser/.oh-my-zsh"
+
+elif command -v apt > /dev/null; then
+    echo "Detected Debian"
+
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) # evalutes location of brew so it can be executed by simply calling brew
+else
+    echo 'Unknown OS!'
+fi
+
+
 # fnm init
-eval "$(/opt/homebrew/bin/fnm env --use-on-cd)"
 
 #ZSH_THEME=spaceship
 
 #Env Variables
 export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew/bin/:/usr/local/Cellar:/opt/Sencha/Cmd:/opt/homebrew/Cellar:$PATH
 export EDITOR="/opt/homebrew/bin/nvim"
-export JAVA_HOME=$(/usr/libexec/java_home -v 11)
-export ZSH="/Users/fabiobaser/.oh-my-zsh"
 export LANG=de_DE.UTF-8
 export FZF_DEFAULT_COMMAND="fd -H -t f -E .git -E .DS_Store"
 export DISABLE_AUTO_TITLE=true
@@ -55,16 +77,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # switch group using `,` ad `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
 
-#ZSH Plugins
-# plugins=(
-#   colored-man-pages
-#   brew
-#   1password
-#   colorize
-#   command-not-found
-#   fnm
-#   z
-# )
 
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 # source $ZSH/oh-my-zsh.sh
@@ -100,12 +112,6 @@ alias showfiles="defaults write com.apple.finder AppleShowAllFiles YES"
 alias hidefiles="defaults write com.apple.finder AppleShowAllFiles NO"
 alias cleardock="defaults write com.apple.dock persistent-apps -array; killall Dock"
 
-# Java Commands
-alias j12="export JAVA_HOME=`/usr/libexec/java_home -v 12`; java -version"
-alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
-alias j10="export JAVA_HOME=`/usr/libexec/java_home -v 10`; java -version"
-alias j9="export JAVA_HOME=`/usr/libexec/java_home -v 9`; java -version"
-alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
 
 
 eval "$(sheldon source)"
