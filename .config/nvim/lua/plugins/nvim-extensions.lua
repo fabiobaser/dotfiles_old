@@ -95,4 +95,8 @@ return {
 			{ "<leader>fr", "<CMD>Telescope frecency workspace=CWD<CR>", desc = "Search recent files in CWD" },
 		},
 	},
+	{
+		"max397574/better-escape.nvim",
+		opts = { mappings = { "jk" } },
+	},
 }
