@@ -124,11 +124,6 @@ local active_left = {
 
 local act_mid = {
 	{
-		provider = function()
-			return require("nvim-navic").get_location()
-		end,
-	},
-	{
 		provider = " ",
 		hl = {
 			bg = clrs.base,

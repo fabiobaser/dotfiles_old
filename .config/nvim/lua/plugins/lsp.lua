@@ -20,13 +20,11 @@ return {
             "neovim/nvim-lspconfig",
             "b0o/schemastore.nvim",
             "jay-babu/mason-nvim-dap.nvim",
-            "SmiteshP/nvim-navic",
         },
         config = function()
             require("mason").setup()
             require("config.dap")
             require("mason-lspconfig").setup()
-            require("nvim-navic").setup({ highlight = true })
 
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -40,12 +38,6 @@ return {
                 -- a dedicated handler.
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup({
-                        on_attach = function(client, bufnr)
-                            -- Attaches nvim-navic to the current lsp-server if possible
-                            if client.server_capabilities.documentSymbolProvider then
-                                require("nvim-navic").attach(client, bufnr)
-                            end
-                        end,
                         capabilities = capabilities,
                     })
                 end,
@@ -64,12 +56,6 @@ return {
                                 validate = { enable = true },
                             },
                         },
-                        on_attach = function(client, bufnr)
-                            -- Attaches nvim-navic to the current lsp-server if possible
-                            if client.server_capabilities.documentSymbolProvider then
-                                require("nvim-navic").attach(client, bufnr)
-                            end
-                        end,
                         capabilities = capabilities,
                     })
                 end,
@@ -116,6 +102,9 @@ return {
         event = "LspAttach",
         branch = "main",
         opts = {
+            symbol_in_winbar = {
+                enable = false,
+            },
             lightbulb = {
                 sign = false,
             },
