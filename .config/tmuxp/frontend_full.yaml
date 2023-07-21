@@ -1,0 +1,24 @@
+session_name: frontend
+windows:
+  - window_name: Neovim
+    shell_command_before:
+      - cd ~/Developer/Formcentric/frontend
+    panes:
+      - shell_command:
+          - c
+          - v
+  - window_name: NX
+    layout: "even-horizontal"
+    shell_command_before:
+      - cd ~/Developer/Formcentric/frontend
+      - c
+    panes:
+      - pnpm nx run vestibule:serve
+      - pnpm nx run vestibule:test:watch
+  - window_name: Git
+    layout: "even-horizontal"
+    shell_command_before:
+      - cd ~/Developer/Formcentric/frontend
+      - c
+    panes:
+      - lazygit

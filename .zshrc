@@ -19,6 +19,9 @@ SAVEHIST=$HISTSIZE
 bindkey '\e[A' history-search-backward
 bindkey '\e[B' history-search-forward
 export ZSH_FZF_HISTORY_SEARCH_BIND='^f'
+export PYTHONWARNINGS="ignore"
+set -g @tmux_window_dir_programs "['nvim', 'vim', 'vi', 'git', 'pnpm']"
+
 
 if [[ -n ${ZSH_VERSION-} ]]; then
   autoload -U +X compinit && if [[ ${ZSH_DISABLE_COMPFIX-} = true ]]; then
@@ -53,6 +56,10 @@ else
     echo 'Unknown OS!'
 fi
 
+tmux-window-name() {
+	($TMUX_PLUGIN_MANAGER_PATH/tmux-window-name/scripts/rename_session_windows.py &)
+}
+add-zsh-hook chpwd tmux-window-name
 
 # fnm init
 
@@ -64,8 +71,8 @@ export EDITOR="/opt/homebrew/bin/nvim"
 export LANG=de_DE.UTF-8
 export FZF_DEFAULT_COMMAND="fd -H -t f -E .git -E .DS_Store"
 export DISABLE_AUTO_TITLE=true
-export ZSH_TMUX_AUTO_TITLE_TARGET="window" # plugin tmux-auto-title should change the window not 'pane'
-export ZSH_TMUX_AUTO_TITLE_IDLE_TEXT="%pwd"
+# export ZSH_TMUX_AUTO_TITLE_TARGET="window" # plugin tmux-auto-title should change the window not 'pane'
+# export ZSH_TMUX_AUTO_TITLE_IDLE_TEXT="%pwd"
 
 #COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd.mm.yyyy"

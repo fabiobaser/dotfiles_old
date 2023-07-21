@@ -50,8 +50,8 @@ github = 'jscutlery/nx-completion'
 [plugins.dirhistory]
 remote = 'https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/dirhistory/dirhistory.plugin.zsh'
 
-[plugins.tmux-auto-title]
-github = 'mbenford/zsh-tmux-auto-title'
+# [plugins.tmux-auto-title]
+# github = 'mbenford/zsh-tmux-auto-title'
 
 # [plugins.vi-mode]
 # github = 'jeffreytse/zsh-vi-mode'

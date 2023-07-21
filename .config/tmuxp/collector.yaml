@@ -1,0 +1,23 @@
+session_name: collector
+windows:
+  - window_name: Neovim
+    shell_command_before:
+      - cd ~/Developer/Projects/collector
+    panes:
+      - shell_command:
+          - c
+          - v
+  - window_name: Run
+    layout: "even-horizontal"
+    shell_command_before:
+      - cd ~/Developer/Projects/collector
+      - c
+    panes:
+      - pnpm run dev
+  - window_name: Git
+    layout: "even-horizontal"
+    shell_command_before:
+      - cd ~/Developer/Projects/collector
+      - c
+    panes:
+      - lazygit

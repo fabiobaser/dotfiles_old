@@ -1,0 +1,143 @@
+{;; :!Ca is keycode :a and prefix a with !C
+
+ ;; C  | left_command
+ ;; T  | left_control
+ ;; O  | left_option
+ ;; S  | left_shift
+ ;; F  | fn
+ ;; Q  | right_command
+ ;; W  | right_control
+ ;; E  | right_option
+ ;; R  | right_shift
+ ;; P  | caps_lock
+ ;; !! | command + control + optional + shift (hyper)
+
+ ;; code for all this:
+ ;; https://github.com/yqrashawn/GokuRakuJoudo/blob/b9b334a187379f9bc8182ad59e2cca2a1789e9c0/src/karabiner_configurator/keys.clj#L68
+
+ ;; FROM modifiers
+ ;; to understand better how modifiers work in karabiner
+ ;; karabiner definition of mandatory and optional
+ ;; https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/from/modifiers/
+
+ ;;    | no modifier
+ ;;                  input key maps to output key exactly
+ ;;                  adding any modifier will cancel the event
+
+ ;; !  | mandatory
+ ;;                  specified modifier is removed in output (to event)
+ ;;                  specified modifiers must be present for event to occur
+ ;;                  adding any other modifier will cancel the event
+
+ ;; #  | optional (single)
+ ;;                  specified modifier is kept in output (to event)
+ ;;                  one (or none) of the specified modifiers must be present
+ ;;                  adding any other modifier will cancel the event
+
+ ;; ## | optional any
+ ;;                  specified modifier is removed in output (to event)
+ ;;                  specified modifiers *must* be present for event to occur
+ ;;                  adding any other modifier will add to output event
+ ;;                  (what you typically expect, additional modifiers tacked on)
+ ;;
+ ;; need to prefix C T O S F with ! or #
+ ;;
+
+ :profiles {:Default {:default true
+                      :sim     50     ; simultaneous_threshold_milliseconds (def: 50)
+                      ;; if keydown event for two different keys are pressed within :sim ms, the keypresses are considered simultaneous
+                      :delay   150    ; to_delayed_action_delay_milliseconds (def: 500)
+                      ;; after :delay ms, the key press is considered to be delayed (used for double-press macros)
+                      :alone   500    ; to_if_alone_timeout_milliseconds (def: 1000)
+                      ;; if keyup event comes within :alone ms from keydown, the key is not just pressed but held
+                      :held    500    ; to_if_held_down_threshold_milliseconds (def: 500)
+                      ;; key is fired twice when :held ms is elapsed (otherwise seen as a hold command)
+                      }};; profiles
+
+ :simlayer-threshold 500
+
+ :templates {:open "open \"/Applications/%s.app\""
+             :yabai "/opt/homebrew/bin/yabai %s"
+             :brew "/opt/homebrew/bin/brew %s"
+             :vpnPW "/Users/fabiobaser/getMondayVPN.sh"}
+
+ ;; layers are basically "hyper" keys
+ ;; press this in combination with something else and depending on your rule, make things happen
+ :layers {:caps_mode {:key :caps_lock :alone {:key :escape}}
+          :hyper_mode {:key :end}}
+
+ ;; simlayers are basically "hyper" keys
+ ;; layers works too, but only recommended for non-typing keys like . or tab
+ ;; to use more regular typing keys, use simlayers
+ :simlayers {:o-mode {:key :o}
+             :f-mode {:key :f}
+             :d-mode {:key :d}}
+
+
+ :main [;; each manipulator has a description and multiple rules
+
+        ;; {:des "..."                               ;; -> description
+        ;; :rules[
+        ;;          [<from>  <to>  <conditions>]    ;; -> rule 1
+        ;;          [<from>  <to>  <conditions>]    ;; -> rule 2
+        ;; ]}
+
+        ;; rule [:period ["period-mode" 1] nil {:afterup ["period-mode" 0] :alone :period}]
+        ;;       |_____| |_______________| |_| |_________________________________________|
+        ;;        <from>    <to>      <conditions>         <other options>
+        ;;
+        ;; karabiner docs: ;; https://pqrs.org/osx/karabiner/json.html#complex_modifications-manipulator-definition
+        ;; <other options> includs ~to_if_alone~, ~to_if_held_down~,~to_after_key_up~, ~to_delayed_action~ and ~parameters~.
+        ;;
+
+        ;; (custom variables) & modifiers -> Advanced
+        ;; https://github.com/yqrashawn/GokuRakuJoudo/blob/master/examples.org#custom-variable
+
+        {:des "z and y swap"
+         :rules [[:##z :y] [:##y :z]]}
+
+        {:des "caps-layer for hjkl movement and media control"
+         :rules [:caps_mode
+                 [:##h :left_arrow]
+                 [:##j :down_arrow]
+                 [:##k :up_arrow]
+                 [:##l :right_arrow]
+                 [:##delete_or_backspace :delete_forward]
+                 [:##v [:vpnPW]]
+                 [:##q :rewind]
+                 [:##w :play_or_pause]
+                 [:##e :fastforward]]}
+
+        {:des "f-mode for brackets"
+         :rules [:f-mode
+                 [:##j :!S9]
+                 [:##u :!S0]
+                 [:##k :!Sopen_bracket]
+                 [:##i :!Sclose_bracket]
+                 [:##l :open_bracket]
+                 [:##o :close_bracket]]}
+
+        {:des "d-mode for brackets"
+         :rules [:d-mode
+                 [:##j :hyphen]
+                 [:##u :!Shyphen]
+                 [:##k :equal_sign]
+                 [:##i :!Sequal_sign]]}
+
+        {:des "end-mode for system control"
+         :rules [:hyper_mode
+                 [:!Sr [:brew "services restart yabai"]]
+                 [:b [:yabai "-m space --balance"]]
+                 [:r [:yabai "-m space --mirror y-axis"]]
+                 [:t [:yabai  "-m window --toggle float"]]]}
+
+        {:des "Open shortcuts"
+         :rules [:o-mode
+                 [:t [:open "Tower"]]
+                 [:k [:open "Kitty"]]
+                 [:a [:open "Arc"]]
+                 [:v [:open "Vivaldi"]]
+                 [:c [:open "Calendars"]]
+                 [:1 [:open "1Password"]]
+                 [:z [:open "zoom.us"]]
+                 [:s [:open "Spotify"]]]}]}
