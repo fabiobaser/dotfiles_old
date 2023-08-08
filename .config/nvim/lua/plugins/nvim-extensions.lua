@@ -60,6 +60,7 @@ return {
                     require("telescope-tabs").setup({})
                 end,
             },
+            "Marskey/telescope-sg",
         },
         config = function()
             local telescope = require("telescope")
@@ -80,6 +81,12 @@ return {
                     file_browser = {
                         hijack_netrw = true,
                     },
+                    ast_grep = {
+                        command = { "sg", "--json=stream", "-p" },
+                        grep_open_files = true,
+                        disable_devicons = true,
+                        lang = nil,
+                    },
                 },
             })
 
@@ -89,6 +96,7 @@ return {
             telescope.load_extension("telescope-tabs")
             telescope.load_extension("refactoring")
             telescope.load_extension("file_browser")
+            telescope.load_extension("ast_grep")
         end,
         keys = {
             { "<leader>ff", "<CMD>Telescope find_files<CR>",             desc = "Search for Files" },
@@ -108,5 +116,13 @@ return {
     {
         "max397574/better-escape.nvim",
         opts = { mappings = { "jk" } },
+    },
+    {
+        "chrisgrieser/nvim-origami",
+        event = "BufReadPost",
+        opts = {
+            keepFoldsAcrossSessions = true,
+            setupFoldKeymaps = true,
+        },
     },
 }
