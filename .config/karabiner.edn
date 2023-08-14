@@ -122,7 +122,8 @@
                  [:##j :hyphen]
                  [:##u :!Shyphen]
                  [:##k :equal_sign]
-                 [:##i :!Sequal_sign]]}
+                 [:##i :!Sequal_sign]
+                 [:##h :!Sgrave_accent_and_tilde]]}
 
         {:des "end-mode for system control"
          :rules [:hyper_mode
