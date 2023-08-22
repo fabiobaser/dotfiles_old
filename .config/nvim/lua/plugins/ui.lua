@@ -116,12 +116,17 @@ return {
                     },
                     {
                         text = function(buffer)
-                            return buffer.filename .. "  "
+                            return buffer.filename
                         end,
-                        style = function(buffer)
-                            return buffer.is_focused and "bold" or nil
+                        style = "italic,bold",
+                    },
+
+                    {
+                        text = function(buffer)
+                            return buffer.is_modified and " *" or ""
                         end,
                     },
+                    { text = "  " },
                 },
             })
         end,
@@ -152,7 +157,6 @@ return {
             },
         },
     },
-    { "mvllow/modes.nvim",       config = true },
     {
         "lukas-reineke/indent-blankline.nvim",
         opts = {
