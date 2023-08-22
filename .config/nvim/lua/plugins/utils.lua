@@ -32,6 +32,7 @@ return {
                 char = { jump_labels = true },
             },
             label = { rainbow = { enabled = true } },
+            jump = { autojump = false },
         },
         keys = {
             {
