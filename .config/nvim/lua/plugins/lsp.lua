@@ -73,7 +73,7 @@ return {
 
             null_ls.setup({
                 sources = {
-                    formatting.prettier,
+                    formatting.prettierd,
                     formatting.stylua,
                     null_ls.builtins.code_actions.gitsigns,
                     null_ls.builtins.formatting.cljstyle,
@@ -177,5 +177,16 @@ return {
         config = function()
             require("config.ts")
         end,
+    },
+
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = true,
+    },
+    {
+        "zbirenbaum/copilot-cmp",
+        opts = {},
     },
 }
