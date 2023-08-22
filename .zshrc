@@ -94,7 +94,7 @@ fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
 # brew bundle install
 
-alias v="nvim"
+alias v="nvim --listen /tmp/nvimsocket"
 alias zv="z $1"
 alias vrc="nvim ~/.config/nvim/"
 alias zshconfig="nvim ~/.zshrc"

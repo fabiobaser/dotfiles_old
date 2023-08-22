@@ -25,13 +25,48 @@ return {
         },
     },
     {
-        "ggandor/leap.nvim",
-        dependencies = { "tpope/vim-repeat" },
-        config = function()
-            local leap = require("leap")
-            leap.opts.highlight_unlabeled_phase_one_targets = true
-            leap.add_default_mappings()
-        end,
+        "folke/flash.nvim",
+        event = "VeryLazy",
+        opts = {
+            modes = {
+                char = { jump_labels = true },
+            },
+            label = { rainbow = { enabled = true } },
+        },
+        keys = {
+            {
+                "s",
+                mode = { "n", "x", "o" },
+                function()
+                    require("flash").jump()
+                end,
+                desc = "Flash",
+            },
+            {
+                "S",
+                mode = { "n" },
+                function()
+                    require("flash").treesitter()
+                end,
+                desc = "Flash Treesitter",
+            },
+            {
+                "r",
+                mode = "o",
+                function()
+                    require("flash").remote()
+                end,
+                desc = "Remote Flash",
+            },
+            {
+                "<c-s>",
+                mode = { "c" },
+                function()
+                    require("flash").toggle()
+                end,
+                desc = "Toggle Flash Search",
+            },
+        },
     },
     {
         "nguyenvukhang/nvim-toggler",
@@ -52,6 +87,24 @@ return {
     {
         "windwp/nvim-autopairs",
         config = true,
+    },
+    {
+        "chrisgrieser/nvim-spider",
+        lazy = true,
+        keys = {
+            {
+                "w",
+                function()
+                    require("spider").motion("w")
+                end,
+            },
+            {
+                "e",
+                function()
+                    require("spider").motion("e")
+                end,
+            },
+        },
     },
     {
         "ThePrimeagen/refactoring.nvim",

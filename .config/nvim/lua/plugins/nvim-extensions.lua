@@ -42,6 +42,8 @@ return {
 		end,
 	},
 	"voldikss/vim-floaterm",
+	{ "CRAG666/betterTerm.nvim", opts = { position = "bot", prefix = "FAB_" } },
+	{ "AckslD/messages.nvim", config = true },
 	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
@@ -53,7 +55,7 @@ return {
 				dependencies = { "kkharji/sqlite.lua" },
 			},
 
-			"Marskey/telescope-sg",
+			{ "Marskey/telescope-sg" },
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -103,6 +105,7 @@ return {
 			{ "<leader>fH", "<CMD>Telescope help_tags<CR>", desc = "Search Help Tags" },
 			{ "<leader>fR", "<CMD>Telescope frecency<CR>", desc = "Search recent files" },
 			{ "<leader>fr", "<CMD>Telescope frecency workspace=CWD<CR>", desc = "Search recent files in CWD" },
+			{ "<leader>fa", "<CMD>Telescope ast_grep<CR>", desc = "Search with ast_grep" },
 		},
 	},
 	{
