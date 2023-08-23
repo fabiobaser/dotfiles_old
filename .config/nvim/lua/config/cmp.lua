@@ -2,15 +2,6 @@ local cmp = require("cmp")
 local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 
-local source_mapping = {
-	buffer = "[Buffer]",
-	nvim_lsp = "[LSP]",
-	nvim_lua = "[Lua]",
-	cmp_tabnine = "[TN]",
-	path = "[Path]",
-	luasnip = "[Snip]",
-}
-
 local tabnine = require("cmp_tabnine.config")
 
 local has_words_before = function()
@@ -27,11 +18,6 @@ tabnine:setup({
 	sort = true,
 	run_on_every_keystroke = true,
 	snippet_placeholder = "..",
-	ignored_file_types = {
-		-- default is not to ignore
-		-- uncomment to ignore in lua:
-		-- lua = true
-	},
 	show_prediction_strength = false,
 })
 cmp.setup({
@@ -41,7 +27,11 @@ cmp.setup({
 		end,
 	},
 	formatting = {
-		format = lspkind.cmp_format({ mode = "symbol_text", max_width = 50, symbol_map = { Copilot = "" } }),
+		format = lspkind.cmp_format({
+			mode = "symbol_text",
+			max_width = 50,
+			symbol_map = { Copilot = "", TabNine = "⁹" },
+		}),
 	},
 	mapping = {
 		["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
