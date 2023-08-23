@@ -27,28 +27,6 @@ return {
         config = true,
     },
     {
-        "folke/twilight.nvim",
-        opts = {
-            dimming = {
-                alpha = 0.25,
-                color = { "Normal", "#ffffff" },
-                term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
-                inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
-            },
-            context = 10, -- amount of lines we will try to show around the current line
-            treesitter = true, -- use treesitter when available for the filetype
-            -- treesitter is used to automatically expand the visible text,
-            -- but you can further control the types of nodes that should always be fully expanded
-            expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
-                "function",
-                "method",
-                "table",
-                "if_statement",
-            },
-            exclude = { "json" }, -- exclude these filetypes
-        },
-    },
-    {
         "yamatsum/nvim-nonicons",
         dependencies = { "kyazdani42/nvim-web-devicons" },
         config = function()
@@ -94,10 +72,32 @@ return {
         config = function()
             local is_picking_focus = require("cokeline.mappings").is_picking_focus
             local is_picking_close = require("cokeline.mappings").is_picking_close
-            local red = vim.g.terminal_color_1
-            local yellow = vim.g.terminal_color_3
+            local palette = require("catppuccin.palettes").get_palette("mocha")
 
             require("cokeline").setup({
+                default_hl = {
+                    fg = function(buf)
+                        return buf.is_focused and palette.base or palette.text
+                    end,
+                    bg = function(buf)
+                        return buf.is_focused and palette.subtext1 or palette.base
+                    end,
+                },
+                sidebar = {
+                    filetype = "neo-tree",
+                    components = {
+                        {
+                            text = "    Fabio's Neovim",
+                            fg = function(buf)
+                                return buf.is_focused and palette.base or palette.text
+                            end,
+                            bg = function(buf)
+                                return buf.is_focused and palette.text or palette.base
+                            end,
+                            style = "bold",
+                        },
+                    },
+                },
                 components = {
                     { text = "  " },
                     {
@@ -106,8 +106,8 @@ return {
                                 or buffer.devicon.icon
                         end,
                         fg = function(buffer)
-                            return (is_picking_focus() and yellow)
-                                or (is_picking_close() and red)
+                            return (is_picking_focus() and palette.peach)
+                                or (is_picking_close() and palette.red)
                                 or buffer.devicon.color
                         end,
                         style = function(_)
@@ -118,7 +118,7 @@ return {
                         text = function(buffer)
                             return buffer.filename
                         end,
-                        style = "italic,bold",
+                        style = "italic",
                     },
 
                     {
@@ -191,66 +191,6 @@ return {
         config = true,
     },
     {
-        "akinsho/bufferline.nvim",
-        dependencies = { "tiagovla/scope.nvim" },
-        config = function()
-            -- require("config.bufferline")
-        end,
-    },
-    {
-        "kevinhwang91/nvim-ufo",
-        dependencies = { "kevinhwang91/promise-async" },
-        config = function()
-            local handler = function(virtText, lnum, endLnum, width, truncate)
-                local newVirtText = {}
-                local suffix = ("  %d "):format(endLnum - lnum)
-                local sufWidth = vim.fn.strdisplaywidth(suffix)
-                local targetWidth = width - sufWidth
-                local curWidth = 0
-                for _, chunk in ipairs(virtText) do
-                    local chunkText = chunk[1]
-                    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-                    if targetWidth > curWidth + chunkWidth then
-                        table.insert(newVirtText, chunk)
-                    else
-                        chunkText = truncate(chunkText, targetWidth - curWidth)
-                        local hlGroup = chunk[2]
-                        table.insert(newVirtText, { chunkText, hlGroup })
-                        chunkWidth = vim.fn.strdisplaywidth(chunkText)
-                        -- str width returned from truncate() may less than 2nd argument, need padding
-                        if curWidth + chunkWidth < targetWidth then
-                            suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-                        end
-                        break
-                    end
-                    curWidth = curWidth + chunkWidth
-                end
-                table.insert(newVirtText, { suffix, "MoreMsg" })
-                return newVirtText
-            end
-
-            require("ufo").setup({
-                open_fold_hl_timeout = 150,
-                fold_virt_text_handler = handler,
-                close_fold_kinds = { "imports", "comment" },
-                preview = {
-                    win_config = {
-                        border = { "", "─", "", "", "", "─", "", "" },
-                        winhighlight = "Normal:Folded",
-                        winblend = 0,
-                    },
-                    mappings = {
-                        scrollU = "<C-u>",
-                        scrollD = "<C-d>",
-                    },
-                },
-                provider_selector = function(bufnr, filetype, buftype)
-                    return { "treesitter", "indent" }
-                end,
-            })
-        end,
-    },
-    {
         "feline-nvim/feline.nvim",
         config = function()
             require("config.statusline")
@@ -259,18 +199,8 @@ return {
     {
         "j-hui/fidget.nvim",
         branch = "legacy",
-        opts = {
-            window = {
-                blend = 0,
-            },
-        },
-    },
-    {
-        "akinsho/git-conflict.nvim",
-        version = "*",
         config = true,
     },
-
     {
         "folke/trouble.nvim",
         config = true,

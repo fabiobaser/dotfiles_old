@@ -19,16 +19,7 @@ map("n", "<S-Up>", "<CMD>move -2<CR>", "Move Line Up")
 map("n", "<S-Down>", "<CMD>move +1<CR>", "Move Line Down")
 map("i", "<S-Up>", "<ESC><CMD>move -2<CR>", "Move Line Up")
 map("i", "<S-Down>", "<ESC><CMD>move +1<CR>", "Move Line Down")
-map("n", "zR", require("ufo").openAllFolds, "Open all Folds")
-map("n", "zM", require("ufo").closeAllFolds, "Close all Folds")
-map("n", "zr", require("ufo").openFoldsExceptKinds, "Open All Folds except Kinds")
-map("n", "zm", require("ufo").closeFoldsWith, "Close all Folds")
-map("n", "K", function()
-	local winid = require("ufo").peekFoldedLinesUnderCursor()
-	if not winid then
-		vim.lsp.buf.hover()
-	end
-end, "Close all Folds")
+map("n", "K", vim.lsp.buf.hover, "Close all Folds")
 
 map("n", "<leader>pi", "<CMD>Lazy<CR>", "Lazy Package Manager")
 map("n", "<leader>pI", "<CMD>Mason<CR>", "Mason Package Manager")

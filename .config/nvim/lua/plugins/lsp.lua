@@ -41,6 +41,13 @@ return {
                         capabilities = capabilities,
                     })
                 end,
+            ["tsserver"] = function()
+                    require("lspconfig").tsserver.setup({
+                        on_attach = function(client)
+                            client.resolved_capabilities.document_formatting = false
+                        end
+                    })
+                end,
                 ["tailwindcss"] = function()
                     require("lspconfig").tailwindcss.setup({
                         on_attach = function(client, bufnr)
