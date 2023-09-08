@@ -172,7 +172,7 @@
             }
           },
           "to" : [ {
-            "shell_command" : "/Users/fabiobaser/getMondayVPN.sh"
+            "shell_command" : "/usr/local/bin/op item get 'MondayVPN' --otp | xargs echo -n | pbcopy ; pbpaste"
           } ],
           "conditions" : [ {
             "name" : "caps_mode",
@@ -814,6 +814,19 @@
           },
           "to" : [ {
             "shell_command" : "/opt/homebrew/bin/yabai -m space --mirror y-axis"
+          } ],
+          "conditions" : [ {
+            "name" : "hyper_mode",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "v"
+          },
+          "to" : [ {
+            "shell_command" : "/usr/local/bin/op item get 'MondayVPN' --otp | xargs echo -n | pbcopy ; pbpaste"
           } ],
           "conditions" : [ {
             "name" : "hyper_mode",
