@@ -2,36 +2,118 @@ return {
     {
         "rcarriga/nvim-dap-ui",
         config = function()
-            require("dapui").setup()
+            require("dapui").setup({
+                layout = {
+
+                    elements = { "console" },
+                    size = 0.25, -- 25% of total lines
+                    position = "bottom",
+                },
+            })
         end,
         keys = {
             { "<leader>dU", "<cmd>lua require'dapui'.toggle()<cr>", desc = "Toggle UI" },
         },
     },
     {
-        "jay-babu/mason-nvim-dap.nvim",
-        dependencies = { "mfussenegger/nvim-dap" },
-        config = function()
-            require("mason-nvim-dap").setup({
-                automatic_installation = true,
-                handlers = {
-                    function(config)
-                        -- all sources with no handler get passed here
-
-                        -- Keep original functionality
-                        require("mason-nvim-dap").default_setup(config)
-                    end,
-                    node2 = function(config)
-                        config.adapters = {
-                            type = "executable",
-                            command = "/Users/fabiobaser/.local/share/nvim/mason/bin/node-debug2-adapter",
-                            args = {},
-                        }
-                        print(vim.inspect(config))
-                        require("mason-nvim-dap").default_setup(config)
-                    end,
+        "mfussenegger/nvim-dap",
+        dependencies = {
+            {
+                "rcarriga/nvim-dap-ui",
+                config = function()
+                    require("dapui").setup()
+                end,
+                keys = {
+                    { "<leader>dU", "<cmd>lua require'dapui'.toggle()<cr>", desc = "Toggle UI" },
                 },
-            })
+            },
+        },
+        config = function()
+            local dap = require("dap")
+            local masonPackagePath = "/Users/fabiobaser/.local/share/nvim/mason/bin/"
+
+            dap.adapters.node2 = {
+                type = "executable",
+                command = masonPackagePath .. "node-debug2-adapter",
+            }
+            dap.adapters.chrome = {
+                type = "executable",
+                command = masonPackagePath .. "chrome-debug-adapter",
+            }
+            dap.configurations.javascript = {
+                {
+                    name = "Launch",
+                    type = "node2",
+                    request = "launch",
+                    program = "${file}",
+                    cwd = vim.fn.getcwd(),
+                    sourceMaps = true,
+                    protocol = "inspector",
+                    console = "integratedTerminal",
+                },
+                {
+                    -- For this to work you need to make sure the node process is started with the `--inspect` flag.
+                    name = "Attach to process",
+                    type = "node2",
+                    request = "attach",
+                    processId = require("dap.utils").pick_process,
+                },
+                {
+                    name = "Chrome: Debug",
+                    type = "chrome",
+                    request = "attach",
+                    program = "${file}",
+                    cwd = vim.fn.getcwd(),
+                    sourceMaps = true,
+                    protocol = "inspector",
+                    port = 9222,
+                    webRoot = "${workspaceFolder}",
+                },
+                {
+                    type = "chrome",
+                    request = "launch",
+                    -- name of the debug action
+                    name = "Launch Chrome :1234",
+                    -- default vite dev server url
+                    url = "http://localhost:1234",
+                    -- for TypeScript/Svelte
+                    sourceMaps = true,
+                    webRoot = "${workspaceFolder}/src",
+                    protocol = "inspector",
+                    port = 9222,
+                    -- skip files from vite's hmr
+                    skipFiles = { "**/node_modules/**/*", "**/@vite/*", "**/src/client/*", "**/src/*" },
+                },
+                {
+                    type = "chrome",
+                    request = "launch",
+                    -- name of the debug action
+                    name = "Launch Chrome :3000",
+                    -- default vite dev server url
+                    url = "http://localhost:3000",
+                    -- for TypeScript/Svelte
+                    sourceMaps = true,
+                    webRoot = "${workspaceFolder}/src",
+                    protocol = "inspector",
+                    port = 9222,
+                    -- skip files from vite's hmr
+                    skipFiles = { "**/node_modules/**/*", "**/@vite/*", "**/src/client/*", "**/src/*" },
+                },
+            }
+            dap.configurations.typescript = dap.configurations.javascript
+            dap.configurations.typescriptreact = dap.configurations.javascript
+            dap.configurations.javascriptreact = dap.configurations.javascript
+
+            local dapui = require("dapui")
+            dap.listeners.after.event_initialized["dapui_config"] = function()
+                dapui.open()
+            end
+            dap.listeners.before.event_terminated["dapui_config"] = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited["dapui_config"] = function()
+                dapui.close()
+            end
         end,
         keys = {
             { "<leader>dR", "<cmd>lua require'dap'.run_to_cursor()<cr>",     desc = "Run to Cursor" },

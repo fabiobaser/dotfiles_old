@@ -59,7 +59,7 @@
  :templates {:open "open \"/Applications/%s.app\""
              :yabai "/opt/homebrew/bin/yabai %s"
              :brew "/opt/homebrew/bin/brew %s"
-             :vpnPW "/Users/fabiobaser/getMondayVPN.sh"}
+             :vpnPW "/usr/local/bin/op item get 'MondayVPN' --otp | xargs echo -n | pbcopy ; pbpaste"}
 
  ;; layers are basically "hyper" keys
  ;; press this in combination with something else and depending on your rule, make things happen
@@ -130,6 +130,7 @@
                  [:!Sr [:brew "services restart yabai"]]
                  [:b [:yabai "-m space --balance"]]
                  [:r [:yabai "-m space --mirror y-axis"]]
+                 [:v [:vpnPW]]
                  [:t [:yabai  "-m window --toggle float"]]]}
 
         {:des "Open shortcuts"
