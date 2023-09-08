@@ -50,10 +50,6 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-ui-select.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-			{
-				"nvim-telescope/telescope-frecency.nvim",
-				dependencies = { "kkharji/sqlite.lua" },
-			},
 
 			{ "Marskey/telescope-sg" },
 		},
@@ -94,7 +90,6 @@ return {
 
 			telescope.load_extension("fzf")
 			telescope.load_extension("ui-select")
-			telescope.load_extension("frecency")
 			telescope.load_extension("ast_grep")
 		end,
 		keys = {
@@ -103,14 +98,19 @@ return {
 			{ "<leader>fb", "<CMD>Telescope buffers<CR>", desc = "Search Buffers" },
 			{ "<leader>fh", "<CMD>Telescope highlights<CR>", desc = "Search Highlight Groups" },
 			{ "<leader>fH", "<CMD>Telescope help_tags<CR>", desc = "Search Help Tags" },
-			{ "<leader>fR", "<CMD>Telescope frecency<CR>", desc = "Search recent files" },
-			{ "<leader>fr", "<CMD>Telescope frecency workspace=CWD<CR>", desc = "Search recent files in CWD" },
 			{ "<leader>fa", "<CMD>Telescope ast_grep<CR>", desc = "Search with ast_grep" },
 		},
 	},
 	{
 		"max397574/better-escape.nvim",
 		opts = { mappings = { "jk" } },
+	},
+	{
+		"Cassin01/wf.nvim",
+		version = "*",
+		config = function()
+			require("config.wf")
+		end,
 	},
 	{
 		"chrisgrieser/nvim-origami",
